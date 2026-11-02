@@ -78,9 +78,25 @@ var PROJECT_SECTION_ORDER = {
 };
 
 var PROJECTS = [
-    { id: 'exit', title: 'Выход', year: 2026, medium: 'Филейное вязание', desc: 'Владивосток', concept: '', tech: ['Стрит-арт'], exhibitions: [], links: [], image: 'projects/32_exit/cover.png', video: '', gallery: null, tile: [8, 6], featured: false, cat: 'street', art: { style: 'texture', seed: 35, pal: ['#0a0a0d', '#ff5a36', '#f1efe9', '#6a4d46'] } },
-    { id: 'sense-of-home-street', title: 'Чувство дома (стрит-арт)', year: 2026, medium: 'Филейное вязание', desc: 'Владивосток', concept: '', tech: ['Стрит-арт'], exhibitions: [], links: [], image: 'projects/31_sense_of_home_street/cover.png', video: '', gallery: null, tile: [8, 6], featured: false, cat: 'street', art: { style: 'texture', seed: 34, pal: ['#0a0a0d', '#ff5a36', '#f1efe9', '#6a4d46'] } },
-    { id: 'aqualumina', title: 'aqualumina', year: 2026, medium: 'Световая инсталляция на воде', desc: 'фестиваль «Открывая Безымянное», Владивосток', concept: 'Проект создан в рамках магистратуры ArtTECH МИСИС.', tech: ['Свет', 'Инсталляция'], exhibitions: ['f1'], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/256633227/aqualumina' }], image: 'projects/30_aqualumina/photos/1.jpg', video: '', gallery: null, blocks: [
+    { id: 'exit', title: 'Выход', year: 2026, medium: 'Филейное вязание', desc: 'Владивосток', concept: '', tech: ['Стрит-арт'], exhibitions: [], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/257524705/vyhod' }], image: 'projects/32_exit/cover.png', video: '', gallery: null, blocks: [
+        { type: 'full', image: 'projects/32_exit/photos/1.jpg' },
+        { type: 'grid', images: ['projects/32_exit/photos/2.1.jpg', 'projects/32_exit/photos/2.2.jpg'] },
+        { type: 'full', image: 'projects/32_exit/photos/3.jpg' },
+        { type: 'grid', images: ['projects/32_exit/photos/4-1.jpg', 'projects/32_exit/photos/4-2.jpg'] },
+        { type: 'full', image: 'projects/32_exit/photos/5.jpg' },
+        { type: 'full', image: 'projects/32_exit/photos/6.jpg' }
+    ], tile: [8, 6], featured: false, cat: 'street', art: { style: 'texture', seed: 35, pal: ['#0a0a0d', '#ff5a36', '#f1efe9', '#6a4d46'] } },
+    { id: 'sense-of-home-street', title: 'Чувство дома (стрит-арт)', year: 2026, medium: 'Филейное вязание', desc: 'Владивосток', concept: '', tech: ['Стрит-арт'], exhibitions: [], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/257927835/chuvstvo-doma' }], image: 'projects/31_sense_of_home_street/cover.png', video: '', gallery: null, blocks: [
+        { type: 'full', image: 'projects/31_sense_of_home_street/photos/1.jpg' },
+        { type: 'grid', images: ['projects/31_sense_of_home_street/photos/4-1.jpg', 'projects/31_sense_of_home_street/photos/4-2.jpg'] },
+        { type: 'video', src: 'projects/31_sense_of_home_street/photos/3.mp4' },
+        { type: 'full', image: 'projects/31_sense_of_home_street/photos/6.jpg' },
+        { type: 'grid', images: ['projects/31_sense_of_home_street/photos/7-1.jpg', 'projects/31_sense_of_home_street/photos/7-2.jpg'] },
+        { type: 'full', image: 'projects/31_sense_of_home_street/photos/8.jpg' },
+        { type: 'video', src: 'projects/31_sense_of_home_street/photos/5.mp4' }
+    ], tile: [8, 6], featured: false, cat: 'street', art: { style: 'texture', seed: 34, pal: ['#0a0a0d', '#ff5a36', '#f1efe9', '#6a4d46'] } },
+    { id: 'aqualumina', title: 'aqualumina', year: 2026, medium: 'Световая инсталляция на воде', desc: 'фестиваль «Открывая Безымянное», Владивосток', concept: 'Проект создан в рамках магистратуры ArtTECH МИСИС.', tech: ['Свет', 'Инсталляция'], exhibitions: ['f1'], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/256633227/aqualumina' }], image: 'projects/30_aqualumina/cover.png', video: '', gallery: null, blocks: [
+        { type: 'full', image: 'projects/30_aqualumina/photos/1.jpg' },
         { type: 'grid', images: ['projects/30_aqualumina/photos/2.1.jpg', 'projects/30_aqualumina/photos/2.2.jpg'] },
         { type: 'full', image: 'projects/30_aqualumina/photos/3.png' },
         { type: 'full', image: 'projects/30_aqualumina/photos/4.png' },
@@ -97,7 +113,25 @@ var PROJECTS = [
         { type: 'full', image: 'projects/30_aqualumina/photos/15.jpg' },
         { type: 'full', image: 'projects/30_aqualumina/photos/16.jpg' }
     ], tile: [8, 6], featured: true, cat: 'light', art: { style: 'waves', seed: 11, pal: ['#07090c', '#ff5a36', '#f1efe9', '#7c2a18'] } },
-    { id: 'untitled-video', title: 'Без названия', year: 2026, medium: 'Видео-арт, 2’56’’', desc: 'ярмарка СКАН, Красноярск; «Волшебная гора», KABINET, Самара', concept: '', tech: ['Видео-арт'], exhibitions: ['e1', 'e3'], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/254454665/bez-nazvanija' }], image: 'projects/29_untitled/cover.png', video: '', gallery: null, tile: [8, 6], featured: true, cat: 'gen', art: { style: 'streaks', seed: 44, pal: ['#0b0b0c', '#f1efe9', '#ff5a36', '#ffffff'] } },
+    { id: 'untitled-video', title: 'Без названия', year: 2026, medium: 'Видео-арт, 2’56’’', desc: 'ярмарка СКАН, Красноярск; «Волшебная гора», KABINET, Самара', concept: '', tech: ['Видео-арт'], exhibitions: ['e1', 'e3'], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/254454665/bez-nazvanija' }], image: 'projects/29_untitled/cover.png', video: '', gallery: null, blocks: [
+        { type: 'video', src: 'projects/29_untitled/photos/1.mp4' },
+        { type: 'full', image: 'projects/29_untitled/photos/2.png' },
+        { type: 'full', image: 'projects/29_untitled/photos/3.png' },
+        { type: 'grid', images: ['projects/29_untitled/photos/4.1.jpg', 'projects/29_untitled/photos/4.2.jpg'] },
+        { type: 'video', src: 'projects/29_untitled/photos/5.mp4' },
+        { type: 'full', image: 'projects/29_untitled/photos/6.png' },
+        { type: 'grid', images: ['projects/29_untitled/photos/7.1.jpg', 'projects/29_untitled/photos/7.2.jpg', 'projects/29_untitled/photos/7.3.jpg'] },
+        { type: 'grid', images: ['projects/29_untitled/photos/8.1.jpg', 'projects/29_untitled/photos/8.2.jpg'] },
+        { type: 'full', image: 'projects/29_untitled/photos/9.png' },
+        { type: 'full', image: 'projects/29_untitled/photos/10.png' },
+        { type: 'grid', images: ['projects/29_untitled/photos/11.1.png', 'projects/29_untitled/photos/11.2.png'] },
+        { type: 'grid', images: ['projects/29_untitled/photos/12.1.png', 'projects/29_untitled/photos/12.2.png'] },
+        { type: 'grid', images: ['projects/29_untitled/photos/13.1.png', 'projects/29_untitled/photos/13.2.png'] },
+        { type: 'grid', images: ['projects/29_untitled/photos/14.1.png', 'projects/29_untitled/photos/14.2.png'] },
+        { type: 'grid', images: ['projects/29_untitled/photos/15.1.png', 'projects/29_untitled/photos/15.2.png'] },
+        { type: 'full', image: 'projects/29_untitled/photos/16.png' },
+        { type: 'full', image: 'projects/29_untitled/photos/17.png' }
+    ], tile: [8, 6], featured: true, cat: 'gen', art: { style: 'streaks', seed: 44, pal: ['#0b0b0c', '#f1efe9', '#ff5a36', '#ffffff'] } },
     { id: 'sense-of-home', title: 'Чувство дома (мэппинг)', year: 2026, medium: 'Цифровое производство, мэппинг-проекция, видео-арт', desc: 'в рамках магистратуры ArtTECH МИСИС', concept: 'Проект представляет собой мэппинг-проекцию на макет дома, созданный по реальной фотографии утраченного деревянного дома в Иркутске.', tech: ['Видео-арт', 'Мэппинг'], exhibitions: [], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/244711203/chuvstvo-doma' }], image: 'projects/28_sense_of_home_mapping/cover.png', video: '', gallery: null, tile: [8, 6], featured: true, cat: 'gen', art: { style: 'waves', seed: 18, pal: ['#0b0c0d', '#ff5a36', '#f1efe9', '#9e4d3b'] } },
     { id: 'consent-machine', title: 'Машина согласия', year: 2026, medium: 'Интерактивная инсталляция, ИИ', desc: '«Мозг. Искусство сознания», Галерея Краснохолмская, Москва', concept: 'Проект создан в рамках магистратуры ArtTECH МИСИС, 2026.', tech: ['ИИ', 'Интерактивные инсталляции'], exhibitions: ['e2'], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/247991015/mashina-soglasija' }], image: 'projects/27_consent_machine/cover.png', video: '', gallery: null, tile: [8, 6], featured: true, cat: 'install', art: { style: 'shards', seed: 66, pal: ['#101012', '#f1efe9', '#3a3a3f', '#ff5a36'] } },
     { id: 'lym-open-day', title: 'День открытых дверей студии LYM', year: 2026, medium: 'Программирование светового оборудования', desc: 'Москва', concept: 'Фото: @psi_agency.', tech: ['Свет', 'Программирование'], exhibitions: ['f2'], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/250002955/den-otkrytyh-dverej-LYM' }], image: 'projects/26_lym_open_day/cover.png', video: '', gallery: null, tile: [8, 6], featured: true, cat: 'light', art: { style: 'tunnel', seed: 22, pal: ['#0a0a0b', '#ff5a36', '#f1efe9', '#3a1a12'] } },

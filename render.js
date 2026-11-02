@@ -242,16 +242,183 @@
     var routes = { '/': home, '/about': about, '/portfolio': portfolio, '/exhibitions': exhibitions, '/contacts': contactsPage };
     var titles = { '/': 'медиахудожник', '/about': 'обо мне', '/portfolio': 'проекты', '/exhibitions': 'выставки', '/contacts': 'Контакты' };
 
+    var PROJECT_DESCRIPTIONS = {
+        'consent-machine': [
+            'Проект исследует понятие AI sycophancy — угодливость ИИ. Это склонность моделей искусственного интеллекта чрезмерно льстить, соглашаться с мнением пользователя, даже если оно ошибочно или иррационально.',
+            'Со временем мы стали воспринимать искусственный интеллект как собеседника, что создает иллюзию взаимоотношений и проявления эмпатии со стороны ИИ. Такой образ сформировался из наших ожиданий и потребности в поддержке и понимании. Но не стоит забывать, что ИИ — это исключительно информационный инструмент, не обладающий эмпатией и настоящими чувствами, как бы убедительно ни выглядела их имитация.'
+        ],
+        'oil-tonne': [
+            'Инсталляция основана на счетчике, отражающем реальные показатели нефтяной отрасли региона. Посетитель может внести свой вклад, увеличив счетчик через поворот вентиля.',
+            'Ключевой особенностью инсталляции является цилиндрический экран, подчёркивающий масштаб и непрерывность процесса добычи нефти на пути к достижению 14-миллиардной тонны нефти.'
+        ],
+        'energetic-heart': [
+            'Интерактивная инсталляция демонстрирует процесс добычи нефти и отображает интересные факты о нефтяной отрасли в регионе Югры на пяти экранах.',
+            'Посетителю необходимо вращать промышленный вентиль непрерывно в течение некоторого времени, чтобы «набрать» свой баррель нефти, знакомясь с масштабами и особенностями нефтяной отрасли региона.'
+        ],
+        'ei-time': [
+            'Проект представляет собой дата-арт-визуализацию, отражающую динамику частоты употребления в книгах слов, связанных с темой эмоционального интеллекта.',
+            'Визуализация данных по теме эмоционального интеллекта позволяет наглядно показать его развитие и проследить динамику интереса общества к теме эмоций и чувств.'
+        ],
+        'mood-mirror': [
+            'Интерактивная инсталляция с захватом движения и сенсором электроэнцефалографии (ЭЭГ), основанная на исследовании отношений между человеком и машиной в области эмоционального восприятия.',
+            'Инсталляция работает как «зеркало»: она показывает эмоции и одновременно демонстрирует пределы технологий — машина воспринимает чувства лишь через заданные категории и значения.',
+            'Mood Mirror подталкивает к вопросам: может ли машина действительно заботиться, или это лишь отражение наших ожиданий? Доверяем ли мы машине больше, чем себе, когда она говорит о нашем внутреннем состоянии? Является ли «совет» полезным, если он не основан на понимании, а лишь на вычислениях? Кто несёт моральную ответственность за советы, озвученные голосом ИИ?',
+            'Человек видит, что машина «распознала» его эмоцию, но на самом деле это лишь иллюзия.'
+        ],
+        'time': [
+            'Что такое время? Оно становится ощутимым лишь тогда, когда мы о нем размышляем, иначе растворяется в окружающем мире.',
+            'Для каждого из нас время и реальность существуют именно так, как мы их воспринимаем — через призму наших эмоций, воспоминаний и переживаний.',
+            'Инсталляция приглашает задуматься о том, как время формирует наше восприятие реальности и как мы сами можем влиять на течение времени, отдаваясь воспоминаниям о прошлом, мечтая о будущем или застывая в настоящем моменте.'
+        ],
+        'prediction': [
+            'Достаточно «прикоснуться» к датчику и запустить процесс сканирования — тогда на экране высветится ваше предсказание на будущее в мире киберпанка.'
+        ],
+        'baikal-install': [
+            'Инсталляция позволяет окунуться в байкальские волны прямо в пространстве Центра современного искусства.'
+        ],
+        'kinetic-symphony': [
+            'Инсталляция отражает 6 базовых эмоций: радость, печаль, страх, отвращение, гнев, удивление.',
+            'Инсталляция призвана обратить внимание на телесные ощущения каждой эмоции через взаимодействие с графикой.',
+            'Реализовано естественное управление — переключение между эмоциями с помощью «нажатия» на стрелки в верхней части инсталляции.',
+            '«Заходи и шевелись созвучно своим эмоциям».'
+        ],
+        'telosophy': [
+            'Три перформанса являются частью одной истории “рождение-поиск-слово”, рассказанной с помощью танца, графики, света и музыки.',
+            'Генеративная графика “живёт” в реальном времени, трансформируясь под движения танца и настроение музыки, формируя иммерсивное пространство, в котором зритель погружён в перформанс.'
+        ],
+        'five-moons': [
+            'Инсталляция расположена в юрте на льду берега Байкала и создана в рамках легенды о Пяти лунах, представляя собой “Ледяное зеркало”.',
+            'Согласно легенде, зеркало совершает некоторое гадание, отражая человека в определенной форме, указывая на выпавшую для него фазу луны.'
+        ],
+        'untitled-video': [
+            'Видео-арт исследует границу между человеком и природой — существует ли момент, когда эта граница исчезает?',
+            'Постепенно сливаясь с природой, человек перестает быть наблюдателем и становится её неотделимой частью. В этот момент привычный ритм жизни и восприятие времени перестают существовать — остается только пространство чувств и ощущений в настоящем моменте.',
+            'Проект создан на основе видеозаписей, сделанных у берегов Байкала: силуэт человека постепенно теряет очертания и растворяется в окружающем пейзаже. Переливы воды, небо, горы наслаиваются и плавно перетекают между собой, сливаясь в единый едва уловимый образ, напоминающий сон или воспоминания.'
+        ],
+        'sense-of-home': [
+            'Чувство дома — это чувство принадлежности, которое сложно описать словами. Оно живёт внутри каждого из нас и может быть совсем не связано с конкретным местом — это чувство принятия и внутренней опоры, ощущения себя на своём месте.',
+            'Проект представляет собой мэппинг-проекцию на макет дома, созданный по реальной фотографии утраченного деревянного дома в Иркутске. Модель вырезана из фанеры и акрила с сохранением всех искажений и неровностей изображения, как отражения неточности памяти в сравнении с реальностью.',
+            'В основе проекции — видео-арт из фотографий иркутских окон: окно постепенно заполняется водой, а затем сгорает. Эти образы отсылают к хрупкости деревянной архитектуры и такому же уязвимому чувству дома, которое, как и любой дом, требует внимания и заботы.'
+        ],
+        'subtraction': [
+            '[вы]читание — проект-исследование, в котором вместо создания текста путём добавления слов используется субтрактивный метод: смысл выявляется через удаление лишнего из уже существующего текста, подобно тому как скульптура возникает из камня.',
+            'Проект переосмысляет практику found poetry через алгоритм поиска поэзии Серебряного века в утилитарных и случайных текстах.',
+            'Отдельным направлением исследования становится визуальная эстетика субтрактивного текста: пустоты, закрытые и вычеркнутые фрагменты формируют новые структуры. Текст превращается в визуальный объект — след редукции, в котором отсутствие становится выразительным элементом наравне с присутствием.'
+        ],
+        'time-ar': [
+            'Проект исследует понятия, связанные с течением времени: дедлайн, ностальгия, иллюзия, сожаление, вдохновение.',
+            'Это состояния, в которых наше восприятие времени трансформируется, и мы мысленно переносимся в прошлое или будущее, либо застываем в текущем моменте.'
+        ],
+        'dreams': [
+            'Зеркало показывает детские мечты, воплощенные в реальность на фотографиях.',
+            'Встав перед зеркалом, можно соприкоснуться со своим внутренним ребенком, который есть в каждом взрослом, и мысленно его обнять.'
+        ],
+        'living-energy': [
+            'Графика отражает процесс зарождения жизни — из хаоса и случайности появляется разум, переходящий в энергию творчества.'
+        ],
+        'aqualumina': [
+            'Инсталляция обращается непосредственно к месту — озеру Безымянное, одному из сохранившихся естественных водоёмов Владивостока. Это реликтовое озеро с историей, уходящей на несколько тысяч лет в прошлое.',
+            'В слоях грунта под озером обнаружены морские отложения, а также раковины морских моллюсков — свидетельства того времени, когда эта территория была связана с морем. Со временем водоём отделился от морской акватории, его очертания менялись, а позже его история продолжилась уже в условиях меняющейся городской среды.',
+            'Три цветка, плавающие на воде, отражают три состояния озера — его прошлое, настоящее и возможное будущее. Вода, торф, растения и всё, что происходило вокруг озера, постепенно меняют его облик. Инсталляция предлагает остановиться и посмотреть на озеро как на живое пространство, которое существует на протяжении многих лет и продолжает меняться вместе с городом.'
+        ],
+        'lym-open-day': [
+            'В рамках Дня открытых дверей реализовано световое оформление для 3-х зон мероприятия: перформанс “Табу” с шестью световыми кольцами, “Фотозона сновидений” с роборукой для съемки видео и тремя прожекторами, и кинетическая инсталляция “Матрёшка”.'
+        ],
+        'sense-of-home-street': [
+            'Дом — это не место, а чувства и воспоминания. Чувство дома живёт внутри каждого из нас и может быть совсем не связано с конкретным местом — это чувство принятия и внутренней опоры, ощущения себя на своём месте.',
+            'Вязаный стрит-арт становится попыткой обрести чувство дома в городском пространстве. Проект отражает хрупкость и непостоянство чувства, которое можно внезапно обрести и так же легко потерять.'
+        ],
+        'exit': [
+            'Выход может появиться там, где вы не ожидали его увидеть.'
+        ]
+    };
+
+    function projectDescription(p) {
+        var text = PROJECT_DESCRIPTIONS[p.id] || [];
+        var body = (text || []).map(function (paragraph) {
+            var clean = (paragraph || '').replace(/\s+/g, ' ').trim();
+            return clean ? '<p class="dbody">' + esc(clean) + '</p>' : '';
+        }).join('');
+        return '<div class="project-description-full">' + body + '</div>';
+    }
+
+    function isPrimaryMediaRef(value) {
+        if (!value || typeof value !== 'string') return false;
+        return /(?:^|\/|\\)(?:cover|1)\.(?:jpe?g|png|gif|webp|avif|mp4|webm|mov)(?:\?|$)/i.test(value)
+            || /(?:^|\/|\\)1\.(?:jpe?g|png|gif|webp|avif)(?:\?|$)/i.test(value)
+            || /(?:^|\/|\\)cover\.(?:jpe?g|png|gif|webp|avif)(?:\?|$)/i.test(value);
+    }
+
+    function projectPrimaryMedia(p) {
+        if (!p || !p.blocks || !p.blocks.length) return '';
+        for (var i = 0; i < p.blocks.length; i++) {
+            var b = p.blocks[i];
+            if (b.type === 'full' && b.image && !isPrimaryMediaRef(b.image) && !/cover\.(?:jpe?g|png|gif|webp|avif)(?:\?|$)/i.test(b.image)) return b.image;
+            if (b.type === 'full' && b.image && isPrimaryMediaRef(b.image)) return b.image;
+            if ((b.type === 'video' || b.type === 'full') && (b.src || b.video)) return b.src || b.video;
+            if (b.type === 'grid' && b.images && b.images.length) {
+                var firstImage = b.images.find(function (img) { return img && !isPrimaryMediaRef(img); });
+                if (firstImage) return firstImage;
+                return b.images[0];
+            }
+        }
+        return '';
+    }
+
+    function projectBlocks(p) {
+        var blocks = p && p.blocks && p.blocks.length ? p.blocks.slice() : [];
+        if (!blocks.length) return blocks;
+
+        var first = blocks[0];
+        if (first && first.type === 'full') {
+            if (first.image && isPrimaryMediaRef(first.image)) {
+                return blocks.slice(1);
+            }
+            if (first.image && /(?:^|\/|\\)cover\.(?:jpe?g|png|gif|webp|avif)(?:\?|$)/i.test(first.image)) {
+                return blocks.slice(1);
+            }
+        }
+        if (first && (first.type === 'video' || first.type === 'full')) {
+            var firstVideo = first.src || first.video || first.image;
+            if (firstVideo && isPrimaryMediaRef(firstVideo)) {
+                return blocks.slice(1);
+            }
+        }
+        if (first && first.type === 'grid' && first.images) {
+            var filtered = first.images.filter(function (img) { return img && !isPrimaryMediaRef(img); });
+            if (filtered.length !== first.images.length) {
+                if (!filtered.length) return blocks.slice(1);
+                first.images = filtered;
+            }
+        }
+        return blocks;
+    }
+
     var modal = $('#modal'), lastFocus = null;
     function detailHTML(p) {
         var pool = (p.gallery || []).slice(), v = 1, t = 0;
         function ph(w, h, alt) { var u = pool.shift(); return u ? urlImg(u, alt) : artImg(p.art, w, h, v++, alt); }
-        var blocks = p.blocks && p.blocks.length ? p.blocks.filter(function (b) { return b.type !== 'text'; }) : [{ type: 'full' }, { type: 'grid', n: 2 }, { type: 'full' }, { type: 'grid', n: 3 }, { type: 'full' }, { type: 'grid', n: 4 }];
+        var blocks = projectBlocks(p);
+        if (!blocks.length) {
+            blocks = [
+                { type: 'full' },
+                { type: 'grid', n: 2 },
+                { type: 'full' },
+                { type: 'grid', n: 3 },
+                { type: 'full' },
+                { type: 'grid', n: 4 }
+            ];
+        }
         return blocks.map(function (b) {
             if (b.type === 'text') { t++; return '<section class="msec rv"><h3 class="label">' + pad2(t) + ' <i class="dot" aria-hidden="true"></i> ' + esc(b.title || 'о проекте') + '</h3><div>' + (b.lead ? '<p class="dlead">' + esc(b.lead) + '</p>' : '') + (b.text ? '<p class="dbody">' + esc(b.text) + '</p>' : '') + '</div></section>'; }
             if (b.type === 'full') {
                 var alt = p.title + ' — фото документации';
-                return '<figure class="project-media project-media--full">' + (b.image ? urlImg(b.image, alt) : ph(1600, 700, alt)) + '</figure>' + (b.caption ? '<p class="dcap">' + esc(b.caption) + '</p>' : '');
+                var media = b.image || (b.src || b.video) || ph(1600, 700, alt);
+                if (b.type === 'video' || /\.(mp4|webm|mov)(?:\?|$)/i.test(media)) {
+                    var videoSrc = b.src || b.video || media;
+                    return '<figure class="project-media project-media--full project-video">' + '<video class="project-video-player" src="' + esc(videoSrc) + '" controls playsinline preload="metadata" aria-label="' + esc(p.title + ' — фото/видео документации') + '"></video>' + '</figure>' + (b.caption ? '<p class="dcap">' + esc(b.caption) + '</p>' : '');
+                }
+                return '<figure class="project-media project-media--full">' + urlImg(media, alt) + '</figure>' + (b.caption ? '<p class="dcap">' + esc(b.caption) + '</p>' : '');
             }
             if (b.type === 'video') {
                 var videoSrc = b.src || b.video || '';
@@ -262,10 +429,11 @@
                 var cnt = Math.max(1, Math.min(6, b.images ? b.images.length : (b.n || 2)));
                 var cells = '';
                 for (var k = 0; k < cnt; k++) {
-                    var a2 = p.title + ' — фото документации';
-                    cells += '<figure class="project-media">' + (b.images && b.images[k] ? urlImg(b.images[k], a2) : ph(900, 700, a2)) + '</figure>';
+                    var imageValue = b.images && b.images[k] ? b.images[k] : ph(900, 700, p.title + ' — фото документации');
+                    if (!imageValue) continue;
+                    cells += '<figure class="project-media">' + urlImg(imageValue, p.title + ' — фото документации') + '</figure>';
                 }
-                return '<div class="project-gallery">' + cells + '</div>';
+                return cells ? '<div class="project-gallery">' + cells + '</div>' : '';
             }
             return '';
         }).join('');
@@ -274,7 +442,40 @@
         var p = PROJECTS[i], prev = PROJECTS[(i - 1 + PROJECTS.length) % PROJECTS.length], next = PROJECTS[(i + 1) % PROJECTS.length]; var s = nat(p), ar = Math.min(2.4, Math.max(.8, s[0] / s[1]));
         var exs = (p.exhibitions || []).map(function (id) { return EXH.filter(function (e) { return e.id === id; })[0]; }).filter(Boolean); var detail = detailHTML(p);
         var topLinks = (p.links || []).filter(function (l) { return /behance/i.test(l.url) || /behance/i.test(l.label); });
-        return '' + '<div class="ppage"><div class="wrap"><div class="pp-top"><a class="back" href="#/portfolio"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> все проекты</a><span class="label">' + TAG('portfolio') + '</span></div><section class="slide"><figure class="fig mhero" data-year="' + esc(p.year) + '" style="aspect-ratio:' + s[0] + '/' + s[1] + '">' + (p.image ? urlImg(p.image, p.title) : artImg(p.art, s[0], s[1], 0, p.title + ', ' + p.year)) + '</figure><div class="slide-txt"><div><div class="slide-head"><h2>' + esc(p.title) + '</h2><span class="slide-yr">' + p.year + '</span></div><p class="slide-med">' + esc(p.medium) + '</p><p class="slide-desc">' + esc(p.desc) + '</p>' + (p.concept ? '<p class="slide-con">' + esc(p.concept) + '</p>' : '') + (topLinks.length ? '<div class="mlinks" style="margin-top:14px">' + topLinks.map(function (l) { return '<a class="more" href="' + esc(l.url) + '" target="_blank" rel="noopener noreferrer">' + esc(l.label || 'behance') + ' <i class="fa-solid fa-arrow-up-right" aria-hidden="true"></i></a>'; }).join('') + '</div>' : '') + '</div></div></section>' + (p.video ? '<section class="msec"><h3 class="label">Видео</h3><video class="mvideo" src="' + esc(p.video) + '" controls playsinline preload="metadata"></video></section>' : '') + detail + '<div class="project-footer"><a class="more" href="#/portfolio">все проекты <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div><nav class="mnav mfoot pnav" aria-label="Другие проекты"><a href="#/portfolio/' + prev.id + '"><span class="label"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Предыдущий</span><span class="nm">' + esc(prev.title) + '</span></a><a href="#/portfolio/' + next.id + '"><span class="label">Следующий <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span><span class="nm">' + esc(next.title) + '</span></a></nav></div></div>';
+        var showCoverHero = !(p.blocks && p.blocks.length);
+        var detailHeroMap = {
+            'aqualumina': 'projects/30_aqualumina/photos/1.jpg',
+            'untitled-video': 'projects/29_untitled/photos/1.mp4'
+        };
+        var leadImg = detailHeroMap[p.id] || p.image;
+        if (!leadImg && p.blocks && p.blocks.length) {
+            leadImg = projectPrimaryMedia(p);
+        }
+        function leadMarkup() {
+            if (!leadImg) return '';
+            if (/\.mp4(?:\?|$)/i.test(leadImg)) {
+                return '<figure class="fig mhero" data-year="' + esc(p.year) + '" style="aspect-ratio:' + s[0] + '/' + s[1] + '"><video class="project-video-player" src="' + esc(leadImg) + '" controls playsinline preload="metadata" aria-label="' + esc(p.title) + ' — фото/видео документации"></video></figure>';
+            }
+            return '<figure class="fig mhero" data-year="' + esc(p.year) + '" style="aspect-ratio:' + s[0] + '/' + s[1] + '">' + urlImg(leadImg, p.title) + '</figure>';
+        }
+        var introFigure = showCoverHero ? ('<figure class="fig mhero" data-year="' + esc(p.year) + '" style="aspect-ratio:' + s[0] + '/' + s[1] + '">' + (p.image ? urlImg(p.image, p.title) : artImg(p.art, s[0], s[1], 0, p.title + ', ' + p.year)) + '</figure>') : leadMarkup();
+        var detail = detailHTML(p);
+        var desc = projectDescription(p);
+        if (desc) {
+            var firstGalleryIndex = detail.indexOf('<div class="project-gallery">');
+            if (firstGalleryIndex >= 0) {
+                var firstGalleryEnd = detail.indexOf('</div>', firstGalleryIndex);
+                if (firstGalleryEnd >= 0) {
+                    firstGalleryEnd += '</div>'.length;
+                    detail = detail.slice(0, firstGalleryEnd) + desc + detail.slice(firstGalleryEnd);
+                } else {
+                    detail += desc;
+                }
+            } else {
+                detail = desc + detail;
+            }
+        }
+        return '' + '<div class="ppage"><div class="wrap"><div class="pp-top"><a class="back" href="#/portfolio"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> все проекты</a><span class="label">' + TAG('portfolio') + '</span></div><section class="slide">' + introFigure + '<div class="slide-txt"><div><div class="slide-head"><h2>' + esc(p.title) + '</h2><span class="slide-yr">' + p.year + '</span></div><p class="slide-med">' + esc(p.medium) + '</p><p class="slide-desc">' + esc(p.desc) + '</p>' + (p.concept ? '<p class="slide-con">' + esc(p.concept) + '</p>' : '') + (topLinks.length ? '<div class="mlinks" style="margin-top:14px">' + topLinks.map(function (l) { return '<a class="more" href="' + esc(l.url) + '" target="_blank" rel="noopener noreferrer">' + esc(l.label || 'behance') + ' <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>'; }).join('') + '</div>' : '') + '</div></div></section>' + (p.video ? '<section class="msec"><h3 class="label">Видео</h3><video class="mvideo" src="' + esc(p.video) + '" controls playsinline preload="metadata"></video></section>' : '') + detail + '<div class="project-footer"><a class="more" href="#/portfolio">все проекты <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div><nav class="mnav mfoot pnav" aria-label="Другие проекты"><a href="#/portfolio/' + prev.id + '"><span class="label"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Предыдущий</span><span class="nm">' + esc(prev.title) + '</span></a><a href="#/portfolio/' + next.id + '"><span class="label">Следующий <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span><span class="nm">' + esc(next.title) + '</span></a></nav></div></div>';
     }
     function openModal(id) {
         var i = PROJECTS.map(function (p) { return p.id; }).indexOf(id); if (i < 0) { location.hash = '#/portfolio'; return; }
@@ -287,7 +488,7 @@
 
     var quickEl = $('#quick'), quickFocus = null;
     function behanceUrl(p) { var l = (p.links || []).filter(function (x) { return /behance/i.test(x.url); })[0]; if (l) return l.url; var s = A.socials.filter(function (x) { return /behance/i.test(x.url) || /behance/i.test(x.label); })[0]; return s ? s.url : ''; }
-    function quickLinks(p) { var out = '', b = behanceUrl(p); if (document.body.classList.contains('home')) { out += '<a class="more" href="#/portfolio/' + p.id + '" data-quick-full>открыть проект <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>'; } if (b) { out += '<a class="more" href="' + esc(b) + '" target="_blank" rel="noopener noreferrer">behance <i class="fa-solid fa-arrow-up-right" aria-hidden="true"></i></a>'; } return out; }
+    function quickLinks(p) { var out = '', b = behanceUrl(p); if (document.body.classList.contains('home')) { out += '<a class="more" href="#/portfolio/' + p.id + '" data-quick-full>открыть проект <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>'; } if (b) { out += '<a class="more" href="' + esc(b) + '" target="_blank" rel="noopener noreferrer">behance <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>'; } return out; }
     function quickHTML(p) { return '<div class="qpanel"><button class="qclose" type="button" data-quick-close aria-label="Закрыть"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button><figure class="fig qfig">' + projImg(p) + '</figure><div class="qtxt"><p class="qyr">' + p.year + '</p><h2>' + esc(p.title) + '</h2><p class="qmed">' + esc(p.medium) + '</p><p class="qdesc">' + esc(p.desc) + '</p>' + (p.concept ? '<p class="qcon">' + esc(p.concept) + '</p>' : '') + '<div class="qlinks">' + quickLinks(p) + '</div></div></div>'; }
     function openQuick(id, from) { var p = PROJECTS.filter(function (x) { return x.id === id; })[0]; if (!p) return; quickFocus = from || document.activeElement; quickEl.innerHTML = quickHTML(p); quickEl.hidden = false; document.body.classList.add('lock'); hydrate(quickEl); var cb = quickEl.querySelector('[data-quick-close]'); if (cb) cb.focus({ preventScroll: true }); }
     function closeQuick() { if (quickEl.hidden) return; quickEl.hidden = true; quickEl.innerHTML = ''; document.body.classList.remove('lock'); if (quickFocus && document.contains(quickFocus)) quickFocus.focus({ preventScroll: true }); quickFocus = null; }
