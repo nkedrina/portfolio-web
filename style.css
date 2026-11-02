@@ -530,7 +530,9 @@
         .slide-med { color: var(--blue); font-size: clamp(1.05rem, 1.6vw, 1.4rem); line-height: 1.4; margin-bottom: 28px; }
         .slide-desc { font-size: 1.12rem; line-height: 1.6; color: var(--fg); margin-bottom: 14px; }
         .slide-con { font-size: .98rem; line-height: 1.6; color: var(--fg); opacity: .72; margin-bottom: 14px; }
-        .slide-yr { font-size: .86rem; color: var(--blue); margin-top: 24px; }
+        .slide-yr { font-size: clamp(1.05rem, 1.6vw, 1.4rem); color: var(--blue); margin-top: 24px; }
+        .slide-dot {font-weight: bolder;}
+        
         .mgal .fig:nth-child(1) { grid-column: 1 / -1; aspect-ratio: 16/9; }
         .mgal .fig:nth-child(n+2) { grid-column: span 6; aspect-ratio: 4/3; }
         @media (max-width: 900px) {
@@ -1402,9 +1404,38 @@
     /* ===== End project gallery section ===== */
 
     /* Existing dgrid rules are intentionally left untouched below this point; the new project gallery is isolated and doesn't conflict. */
-
-
-
-
-
-
+    .project-top-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        width: 100%;
+        margin-top: 18px;
+        margin-bottom: 0;
+        padding-top: 0;
+    }
+    .project-top-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--blue);
+        text-decoration: none;
+        font-size: 0.96rem;
+        line-height: 1.3;
+        cursor: pointer;
+        transition: color .25s ease;
+    }
+    .project-top-link .label { margin: 20px 0; color: var(--blue); }
+    .project-top-link i { margin: 20px 0; color: var(--blue); transition: transform .35s var(--ease); }
+    .project-top-link.prev { margin-right: auto; }
+    .project-top-link.next { margin-left: auto; }
+    .project-top-link:hover,
+    .project-top-link:focus-visible,
+    .project-top-link:hover .label,
+    .project-top-link:focus-visible .label,
+    .project-top-link:hover i,
+    .project-top-link:focus-visible i { color: var(--accent); }
+    .project-top-link.prev:hover i,
+    .project-top-link.prev:focus-visible i { transform: translateX(-6px); }
+    .project-top-link.next:hover i,
+    .project-top-link.next:focus-visible i { transform: translateX(6px); }
