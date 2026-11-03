@@ -1,3 +1,42 @@
+var VERCEL_BLOB_BASE = 'https://lnhqdym4r8iqqhi1.public.blob.vercel-storage.com/';
+
+window.VERCEL_BLOB_BASE = VERCEL_BLOB_BASE;
+
+window.toAssetUrl = function (src) {
+    if (src == null || src === '') return src;
+    if (typeof src !== 'string') return src;
+
+    var value = src.replace(/\\/g, '/');
+    if (/^(?:[a-z]+:)?\/\//i.test(value) || /^data:/i.test(value)) return value;
+    if (value.indexOf(VERCEL_BLOB_BASE.replace(/\/+$/, '')) === 0) return value;
+
+    var normalized = value.replace(/^\/+/, '');
+    var isMediaAsset = /\.(?:png|jpe?g|gif|webp|avif|svg|ico|mp4|webm|mov)(?:\?.*)?$/i.test(normalized) || /^(?:images|projects)\//i.test(normalized);
+    if (!isMediaAsset) return value;
+
+    return VERCEL_BLOB_BASE.replace(/\/+$/, '') + '/' + normalized;
+};
+
+window.normalizeAssetUrls = function (value) {
+    if (Array.isArray(value)) {
+        return value.map(window.normalizeAssetUrls);
+    }
+
+    if (value && typeof value === 'object') {
+        Object.keys(value).forEach(function (key) {
+            var current = value[key];
+            if (typeof current === 'string') {
+                value[key] = window.toAssetUrl(current);
+            } else if (current && typeof current === 'object') {
+                value[key] = window.normalizeAssetUrls(current);
+            }
+        });
+        return value;
+    }
+
+    return value;
+};
+
 var A = {
     name: 'настя кедрина',
     role: 'медиахудожник с Байкала, TouchDesigner-разработчик',
@@ -174,5 +213,10 @@ var EXH = [
     { id: 'f2', type: 'fest', date: '2026-11', label: '', title: 'День открытых дверей студии LYM', venue: 'Студия LYM', city: 'Москва', country: '', url: '', featured: false },
     { id: 'f3', type: 'fest', date: '2025-12', label: '', title: 'Голос кочевников', venue: 'Село Ацагат', city: 'Бурятия', country: '', url: '', featured: false }
 ];
+
+A = window.normalizeAssetUrls(A);
+CATS = window.normalizeAssetUrls(CATS);
+PROJECTS = window.normalizeAssetUrls(PROJECTS);
+EXH = window.normalizeAssetUrls(EXH);
 
 window.PORTFOLIO_DATA = { A: A, CATS: CATS, PROJECTS: PROJECTS, EXH: EXH };
