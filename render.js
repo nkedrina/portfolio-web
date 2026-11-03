@@ -15,6 +15,38 @@
     var TAG = window.PORTFOLIO_UTILS.TAG;
     var RM = window.PORTFOLIO_UTILS.RM;
     var pfCat = 'all';
+    var BLOB_BASE = (window.VERCEL_BLOB_BASE || 'https://lnhqdym4r8iqqhi1.public.blob.vercel-storage.com/').replace(/\/+$/, '');
+
+    function toBlobAssetUrl(src) {
+        if (!src || typeof src !== 'string') return src;
+        var value = src.replace(/\\/g, '/');
+        if (/^(?:[a-z]+:)?\/\//i.test(value) || /^data:/i.test(value)) return value;
+        if (value.indexOf(BLOB_BASE) === 0) return value;
+        return BLOB_BASE + '/' + value.replace(/^\/+/, '');
+    }
+
+    function applyRuntimeAssetOverrides() {
+        var theme = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        var aboutBg = toBlobAssetUrl(theme === 'light' ? (A.photoLight || A.photo || 'images/me_2.jpg') : (A.photo || 'images/me_1.jpg'));
+        var aboutTopBg = toBlobAssetUrl(theme === 'light' ? ('images/me_4.jpg') : ('images/me_3.jpg'));
+        var heroBg = toBlobAssetUrl(theme === 'light' ? (A.heroImageLight || A.heroImage || 'images/back-video-light.gif') : (A.heroImageDark || A.heroImage || 'images/back-video-dark.gif'));
+
+        var existing = document.getElementById('blob-runtime-asset-fix');
+        if (!existing) {
+            existing = document.createElement('style');
+            existing.id = 'blob-runtime-asset-fix';
+            document.head.appendChild(existing);
+        }
+        existing.textContent = [
+            '.about .fig::before { background-image: url("' + aboutBg + '") !important; }',
+            '.abtop .abphoto::before, .abtop .fig::before { background-image: url("' + aboutTopBg + '") !important; }',
+            '.hero { background-image: url("' + heroBg + '") !important; }'
+        ].join(' ');
+
+        if (document.getElementById('hero')) {
+            document.getElementById('hero').style.setProperty('--hero', 'url("' + heroBg + '")');
+        }
+    }
 
     function rng(s) { return function () { s |= 0; s = s + 0x6D2B79F5 | 0; var t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
     function hex(h, a) { var n = parseInt(h.slice(1), 16); return 'rgba(' + (n >> 16) + ',' + (n >> 8 & 255) + ',' + (n & 255) + ',' + (a == null ? 1 : a) + ')'; }
@@ -499,7 +531,7 @@
     function closeQuick() { if (quickEl.hidden) return; quickEl.hidden = true; quickEl.innerHTML = ''; document.body.classList.remove('lock'); if (quickFocus && document.contains(quickFocus)) quickFocus.focus({ preventScroll: true }); quickFocus = null; }
 
     var main = $('#main'), hdr = $('#hdr'), current = null;
-    function setHero() { var hero = $('#hero'); if (!hero) return; setTimeout(function () { var theme = document.documentElement.getAttribute('data-theme'); var src = theme === 'light' ? 'images/back-video-light.gif' : 'images/back-video-dark.gif'; hero.style.setProperty('--hero', 'url("' + src + '")'); }, 0); }
+    function setHero() { var hero = $('#hero'); if (!hero) return; setTimeout(function () { var theme = document.documentElement.getAttribute('data-theme'); var src = theme === 'light' ? (A.heroImageLight || A.heroImage || 'images/back-video-light.gif') : (A.heroImageDark || A.heroImage || 'images/back-video-dark.gif'); hero.style.setProperty('--hero', 'url("' + toBlobAssetUrl(src) + '")'); }, 0); }
     function render(page, pid) {
         if (page === '/portfolio') pfCat = 'all';
         main.innerHTML = page === '/project' ? projectHTML(PROJECTS.map(function (p) { return p.id; }).indexOf(pid)) : routes[page]();
@@ -507,7 +539,7 @@
         document.body.classList.toggle('home', page === '/');
         document.querySelectorAll('.nav a').forEach(function (a) { a.getAttribute('data-p') === page ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'); });
         document.title = '@nkedrina';
-        hydrate(main); if (page === '/') setHero(); window.scrollTo(0, 0); hdr.classList.remove('hide'); lastY = 0; onScroll();
+        hydrate(main); if (page === '/') setHero(); applyRuntimeAssetOverrides(); window.scrollTo(0, 0); hdr.classList.remove('hide'); lastY = 0; onScroll();
     }
     function setNav(key) { document.querySelectorAll('.nav a').forEach(function (a) { a.getAttribute('data-p') === key ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'); }); }
     function scrollToContacts(smooth) { var el = $('#contacts'); if (!el) return; var y = el.getBoundingClientRect().top + (window.pageYOffset || 0); window.scrollTo({ top: y, behavior: smooth && !RM ? 'smooth' : 'auto' }); }
@@ -528,7 +560,7 @@
         var y = Math.max(0, window.pageYOffset || 0); hdr.classList.toggle('top', y < 24); if (!document.body.classList.contains('lock')) { var d = y - lastY; if (y < 24) hdr.classList.remove('hide'); else if (d > 6 && y > 120) hdr.classList.add('hide'); else if (d < -6) hdr.classList.remove('hide'); if (Math.abs(d) > 6) lastY = y; } document.body.classList.toggle('hh', hdr.classList.contains('hide'));
     }
     window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(function () { onScroll(); ticking = false; }); } }, { passive: true }); hdr.addEventListener('focusin', function () { hdr.classList.remove('hide'); });
-    function toggleTheme() { var root = document.documentElement; var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light'; var apply = function () { root.setAttribute('data-theme', next); if (document.body.classList.contains('home')) setHero(); }; try { localStorage.setItem('theme', next); } catch (e) {} if (document.startViewTransition && !RM) { document.startViewTransition(apply); } else { root.classList.add('tchg'); apply(); setTimeout(function () { root.classList.remove('tchg'); }, 700); } }
+    function toggleTheme() { var root = document.documentElement; var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light'; var apply = function () { root.setAttribute('data-theme', next); if (document.body.classList.contains('home')) setHero(); applyRuntimeAssetOverrides(); }; try { localStorage.setItem('theme', next); } catch (e) {} if (document.startViewTransition && !RM) { document.startViewTransition(apply); } else { root.classList.add('tchg'); apply(); setTimeout(function () { root.classList.remove('tchg'); }, 700); } }
     var tt;
     function toast(m) { var t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(function () { t.classList.remove('show'); }, 3600); }
     document.addEventListener('click', function (e) {

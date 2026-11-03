@@ -44,6 +44,8 @@ var A = {
     aboutMeta: '22 года, Иркутск – Москва',
     handle: '@NKEDRINA',
     heroImage: 'images/back-video-light.gif',
+    heroImageLight: 'images/back-video-light.gif',
+    heroImageDark: 'images/back-video-dark.gif',
     photo: 'images/me_1.jpg',
     photoLight: 'images/me_2.jpg',
     shortBio: '',
