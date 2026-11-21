@@ -41,7 +41,7 @@ var A = {
     name: 'настя кедрина',
     role: 'медиахудожник с Байкала, TouchDesigner-разработчик',
     cities: ['Иркутск', 'Москва'],
-    aboutMeta: '22 года, Иркутск – Москва',
+    aboutMeta: '23 года, Иркутск – Москва',
     handle: '@NKEDRINA',
     heroImage: 'images/back-video-light.gif',
     heroImageLight: 'images/back-video-light.gif',
@@ -75,8 +75,8 @@ var A = {
         { name: 'AV-выступления', text: 'Живые выступления, где визуальный ряд и звук создаются и меняются вместе.' }
     ],
     education: [
-        { years: '2025–2027', text: 'магистратура «Технологическое искусство» (ArtTECH), НИТУ МИСИС, Москва' },
-        { years: '2021–2025', text: 'бакалавриат «Прикладная информатика в дизайне», ИГУ, Иркутск' }
+        { years: '2025–2027', text: 'магистратура «Технологическое искусство» (ArtTECH) — НИТУ МИСИС, Москва' },
+        { years: '2021–2025', text: 'бакалавриат «Прикладная информатика в дизайне» — ИГУ, Иркутск' }
     ],
     experience: [
         { years: '2026', text: 'программирование рисующего лазера — студия LYM, Москва' },
@@ -84,9 +84,9 @@ var A = {
         { years: '2026', text: 'программирование кинетической стены — студия LYM, Москва' }
     ],
     workshops: [
-        { years: '2026', text: 'программирование рисующего лазера, студия LYM, Москва' },
-        { years: '2026', text: 'программирование сценических лебедок, студия LYM, Москва' },
-        { years: '2026', text: 'программирование кинетической стены, студия LYM, Москва' }
+        { years: '2026', text: 'программирование рисующего лазера — студия LYM, Москва' },
+        { years: '2026', text: 'программирование сценических лебедок — студия LYM, Москва' },
+        { years: '2026', text: 'программирование кинетической стены — студия LYM, Москва' }
     ],
     email: 'nkedrina@list.ru',
     cv: 'data/CV.pdf',
@@ -201,19 +201,21 @@ var PROJECTS = [
 ];
 
 var EXH = [
-    { id: 'e1', type: 'exh', date: '2026-12', label: '', title: 'Ярмарка СКАН', venue: '', city: 'Красноярск', country: '', url: '', featured: true },
-    { id: 'e2', type: 'exh', date: '2026-11', label: '', title: 'Мозг. Искусство сознания', venue: 'Галерея Краснохолмская', city: 'Москва', country: '', url: '', featured: true },
-    { id: 'e3', type: 'exh', date: '2026-10', label: '', title: 'Волшебная гора', venue: 'KABINET', city: 'Самара', country: '', url: '', featured: false },
-    { id: 'e4', type: 'exh', date: '2026-09', label: '', title: 'Завтра и послезавтра', venue: 'Галерея Краснохолмская', city: 'Москва', country: '', url: '', featured: false },
+    { id: 'e11', type: 'exh', date: '2026-12', label: '', title: '«От буквы к цифре. Книга художника»', venue: 'Галерея Краснохолмская', city: 'Москва', country: '', url: '', featured: false },
+    { id: 'e1', type: 'exh', date: '2026-11', label: '', title: 'ярмарка СКАН', venue: '', city: 'Красноярск', country: '', url: '', featured: true },
+    { id: 'f4', type: 'fest', date: '2026-11', label: '', title: '«День поиска» Яндекс', venue: '', city: 'Москва', country: '', url: '', featured: true },
+    { id: 'f2', type: 'fest', date: '2026-10', label: '', title: 'День открытых дверей студии LYM', venue: 'Студия LYM', city: 'Москва', country: '', url: '', featured: true },
+    { id: 'e2', type: 'exh', date: '2026-10', label: '', title: '«Мозг. Искусство сознания»', venue: 'Галерея Краснохолмская', city: 'Москва', country: '', url: '', featured: false },
+    { id: 'e12', type: 'exh', date: '2026-09', label: '', title: '«Волшебная гора»', venue: 'KABINET', city: 'Самара', country: '', url: '', featured: false },
+    { id: 'e4', type: 'exh', date: '2026-08', label: '', title: '«Завтра и послезавтра»', venue: 'Галерея Краснохолмская', city: 'Москва', country: '', url: '', featured: false },
     { id: 'e5', type: 'exh', date: '2025-12', label: '', title: 'Национальный центр «Россия»', venue: '', city: 'Ханты-Мансийск', country: '', url: '', featured: true },
-    { id: 'e6', type: 'exh', date: '2025-11', label: '', title: 'Цифровые чувства. Мультисенсорный поворот', venue: 'Галерея Краснохолмская', city: 'Москва', country: '', url: '', featured: true },
-    { id: 'e7', type: 'exh', date: '2025-10', label: '', title: 'Выставка №37', venue: 'ЦСИ Огонь', city: 'Иркутск', country: '', url: '', featured: false },
-    { id: 'e8', type: 'exh', date: '2025-09', label: '', title: 'Энергия как предчувствие', venue: 'Галерея Виктора Бронштейна', city: 'Иркутск', country: '', url: '', featured: false },
-    { id: 'e9', type: 'exh', date: '2024-12', label: '', title: 'Детство', venue: 'Арт-пространство Сияние', city: 'Иркутск', country: '', url: '', featured: false },
-    { id: 'e10', type: 'exh', date: '2024-11', label: '', title: 'Шевелись!', venue: 'ЦСИ Огонь', city: 'Иркутск', country: '', url: '', featured: true },
-    { id: 'f1', type: 'fest', date: '2026-12', label: '', title: 'Открывая Безымянное', venue: 'Озеро Безымянное', city: 'Владивосток', country: '', url: '', featured: false },
-    { id: 'f2', type: 'fest', date: '2026-11', label: '', title: 'День открытых дверей студии LYM', venue: 'Студия LYM', city: 'Москва', country: '', url: '', featured: false },
-    { id: 'f3', type: 'fest', date: '2025-12', label: '', title: 'Голос кочевников', venue: 'Село Ацагат', city: 'Бурятия', country: '', url: '', featured: false }
+    { id: 'e6', type: 'exh', date: '2025-11', label: '', title: '«Цифровые чувства. Мультисенсорный поворот»', venue: 'Галерея Краснохолмская', city: 'Москва', country: '', url: '', featured: true },
+    { id: 'e7', type: 'exh', date: '2025-10', label: '', title: '«Выставка No37»', venue: 'ЦСИ Огонь', city: 'Иркутск', country: '', url: '', featured: false },
+    { id: 'e8', type: 'exh', date: '2025-09', label: '', title: '«Энергия как предчувствие»', venue: 'галерея Виктора Бронштейна', city: 'Иркутск', country: '', url: '', featured: false },
+    { id: 'e9', type: 'exh', date: '2024-12', label: '', title: '«Детство»', venue: 'арт-пространство Сияние', city: 'Иркутск', country: '', url: '', featured: false },
+    { id: 'e10', type: 'exh', date: '2024-11', label: '', title: '«Шевелись!»', venue: 'ЦСИ Огонь', city: 'Иркутск', country: '', url: '', featured: false },
+    { id: 'f1', type: 'fest', date: '2026-12', label: '', title: '«Открывая Безымянное»', venue: 'озеро Безымянное', city: 'Владивосток', country: '', url: '', featured: false },
+    { id: 'f3', type: 'fest', date: '2025-12', label: '', title: '«Голос Кочевников»', venue: 'село Ацагат', city: 'Бурятия', country: '', url: '', featured: false }
 ];
 
 A = window.normalizeAssetUrls(A);
