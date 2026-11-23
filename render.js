@@ -160,14 +160,102 @@
     }
     function urlImg(src, alt) { return '<img data-src="' + esc(src) + '" alt="' + esc(alt) + '" decoding="async">'; }
     function nat(p) { return [Math.min(p.tile[0] * 150, 1200), Math.min(p.tile[1] * 150, 1200)]; }
-    function projImg(p) { var s = nat(p), alt = p.title + ', ' + p.year; return p.image ? urlImg(p.image, alt) : artImg(p.art, s[0], s[1], 0, alt); }
+    function projImg(p) {
+        var s = nat(p), alt = p.title + ', ' + p.year;
+        if (p.id === 'yandex-search-day') {
+            return urlImg('projects/25_yandex_search_day/cover.png?v=20261122', alt);
+        }
+        return p.image ? urlImg(p.image, alt) : artImg(p.art, s[0], s[1], 0, alt);
+    }
     function loadImg(im) {
         if (im.dataset.art) { var k = reg[im.dataset.art]; setTimeout(function () { im.src = makeArt(k.art, k.w, k.h, k.v); im.classList.add('on'); }, 0); }
-        else if (im.dataset.src) { im.onload = function () { im.classList.add('on'); }; im.src = im.dataset.src; }
+        else if (im.dataset.src) {
+            im.onload = function () { im.classList.add('on'); };
+            im.onerror = function () {
+                if (im.dataset.fallbackApplied) return;
+                im.dataset.fallbackApplied = '1';
+                var blobPrefix = BLOB_BASE + '/';
+                if (im.src.indexOf(blobPrefix) === 0) {
+                    im.src = im.src.slice(blobPrefix.length);
+                } else if (!/^(?:[a-z]+:)?\/\//i.test(im.dataset.src)) {
+                    im.src = im.dataset.src;
+                }
+            };
+            im.src = im.dataset.src;
+        }
     }
     var imgIO = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { imgIO.unobserve(e.target); loadImg(e.target); } }); }, { rootMargin: '400px' }) : null;
     var rvIO = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); rvIO.unobserve(e.target); } }); }, { rootMargin: '0px 0px -6% 0px' }) : null;
-    function hydrate(root) { root.querySelectorAll('img[data-art],img[data-src]').forEach(function (im) { imgIO ? imgIO.observe(im) : loadImg(im); }); root.querySelectorAll('.rv').forEach(function (el) { rvIO ? rvIO.observe(el) : el.classList.add('in'); }); }
+
+    function layoutProjectGalleries(root) {
+        (root || document).querySelectorAll('.project-gallery').forEach(function (gallery) {
+            var media = Array.prototype.filter.call(gallery.children, function (child) { return child.classList && child.classList.contains('project-media'); });
+            if (!media.length) return;
+
+            gallery.querySelectorAll('.project-gallery-break').forEach(function (breakEl) { breakEl.remove(); });
+
+            media.forEach(function (figure) {
+                var image = figure.querySelector('img');
+                var video = figure.querySelector('video');
+                var width = image && image.naturalWidth || video && video.videoWidth || 0;
+                var height = image && image.naturalHeight || video && video.videoHeight || 0;
+                figure.style.setProperty('--photo-ratio', width && height ? String(width / height) : '1.5');
+            });
+
+            var galleryWidth = gallery.getBoundingClientRect().width;
+            var gap = parseFloat(getComputedStyle(gallery).columnGap) || 0;
+            var rowSize = galleryWidth <= 700 || window.innerWidth <= 700 ? 1 : (galleryWidth <= 900 || window.innerWidth <= 900 ? 2 : 3);
+            gallery.dataset.count = String(media.length);
+
+            for (var start = 0; start < media.length; start += rowSize) {
+                var row = media.slice(start, start + rowSize);
+
+                if (start > 0) {
+                    var breakEl = document.createElement('span');
+                    breakEl.className = 'project-gallery-break';
+                    breakEl.setAttribute('aria-hidden', 'true');
+                    gallery.insertBefore(breakEl, media[start]);
+                }
+
+                var ratios = row.map(function (figure) {
+                    return parseFloat(getComputedStyle(figure).getPropertyValue('--photo-ratio')) || 1.5;
+                });
+                var ratioSum = ratios.reduce(function (sum, ratio) { return sum + ratio; }, 0);
+
+                if (row.length === 1) {
+                    var singleWidth = galleryWidth * .8;
+                    row[0].style.setProperty('--photo-width', singleWidth + 'px');
+                    row[0].style.setProperty('--photo-height', (singleWidth / ratios[0]) + 'px');
+                } else {
+                    var rowHeight = (galleryWidth - gap * (row.length - 1)) / ratioSum;
+                    row.forEach(function (figure, index) {
+                        var itemWidth = ratios[index] * rowHeight;
+                        figure.style.setProperty('--photo-width', itemWidth + 'px');
+                        figure.style.setProperty('--photo-height', rowHeight + 'px');
+                    });
+                }
+            }
+        });
+    }
+
+    var galleryResizeTimer = null;
+    window.addEventListener('resize', function () {
+        clearTimeout(galleryResizeTimer);
+        galleryResizeTimer = setTimeout(function () { layoutProjectGalleries(document); layoutProjectMedia(document); }, 120);
+    });
+
+    function hydrate(root) {
+        root.querySelectorAll('img[data-art],img[data-src]').forEach(function (im) {
+            im.addEventListener('load', function () { layoutProjectGalleries(root); layoutProjectMedia(root); }, { once: true });
+            imgIO ? imgIO.observe(im) : loadImg(im);
+        });
+        root.querySelectorAll('.ppage .slide .mhero video').forEach(function (video) {
+            video.addEventListener('loadedmetadata', function () { layoutProjectMedia(root); }, { once: true });
+        });
+        root.querySelectorAll('.rv').forEach(function (el) { rvIO ? rvIO.observe(el) : el.classList.add('in'); });
+        layoutProjectGalleries(root);
+        layoutProjectMedia(root);
+    }
 
     function pcard(p, variant, style) {
         var home = variant === 'home', r = p.tile[1];
@@ -208,7 +296,7 @@
 
     function home() {
         var feat = PROJECTS.filter(function (p) { return p.featured; }).slice(0, 6);
-        var ex = sortedEx().filter(function (e) { return e.type === 'exh' && e.featured === true; }).slice(0, 5);
+        var ex = sortedEx().filter(function (e) { return e.featured === true; }).slice(0, 5);
         var shortBio = A.shortBio ? '<p class="lead2">' + esc(A.shortBio) + '</p>' : '';
         var homeCv = '<div class="dl"><a class="btn pri" href="data/CV.pdf" target="_blank" rel="noopener noreferrer" data-file="cv"><i class="fa-solid fa-download" aria-hidden="true"></i> скачать CV</a></div>';
         var homePortfolioLink = '<div class="dl"><a class="btn" href="data/portfolio-nkedrina.pdf" target="_blank" rel="noopener noreferrer" data-file="portfolioPdf"><i class="fa-solid fa-download" aria-hidden="true"></i> скачать портфолио</a></div>';
@@ -216,11 +304,11 @@
             '<section class="hero" id="hero" aria-label="Главный экран"><div class="hero-in"><div class="hero-txt"><p class="hero-handle">' + esc(A.handle) + '</p><h1 class="home-hero-name">' + esc(A.name) + '</h1><p class="hero-role">' + esc(A.role) + '<br>' + cityLine() + '</p></div></div><div class="hero-bot"><button class="hero-tgl home-hero-toggle" type="button" data-theme-toggle aria-label="Сменить тему"><span class="sw" aria-hidden="true"><span class="kb"><i class="fa-solid fa-moon m"></i><i class="fa-solid fa-sun s"></i></span></span><span>сменить тему</span></button><button class="hint" type="button" data-scroll="#about" aria-label="Прокрутить вниз"><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></button></div></section>' +
             '<section class="sec" id="about" aria-labelledby="h-about"><div class="wrap"><div class="about">' + photoFigTheme('') + '<div class="about-txt rv"><h2 class="title" id="h-about">обо мне</h2>' + homeCv + shortBio + practiceText() + '<a class="more" href="#/about">подробнее <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></div></div></section>' +
             '<section class="sec" style="padding-top:0" aria-labelledby="h-proj"><div class="wrap"><div class="sec-head"><div><h2 class="title" id="h-proj">избранные проекты</h2></div><span class="label tag">' + TAG('portfolio') + '</span></div>' + homePortfolioLink + '<div class="hgrid">' + feat.map(function (p) { return pcard(p, 'home', ''); }).join('') + '</div><div class="more-row"><a class="more" href="#/portfolio">все проекты <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></div></section>' +
-            '<section class="sec" style="padding-top:0" aria-labelledby="h-ex"><div class="wrap"><div class="sec-head"><h2 class="title" id="h-ex">избранные выставки</h2></div><ul class="exlist">' + ex.map(exRow).join('') + '</ul><div class="more-row"><a class="more" href="#/exhibitions">все выставки <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></div></section>' + contactsBlock(false);
+            '<section class="sec" style="padding-top:0" aria-labelledby="h-ex"><div class="wrap"><div class="sec-head"><h2 class="title" id="h-ex">избранные выставки • мероприятия</h2></div><ul class="exlist">' + ex.map(exRow).join('') + '</ul><div class="more-row"><a class="more" href="#/exhibitions">все выставки <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></div></section>' + contactsBlock(false);
     }
     function about() {
         var rows = function (arr) { return '<ul class="rows">' + arr.map(function (r) { var pr = r.text.split(' — '); return '<li><span class="y">' + esc(r.years) + '</span><span><span class="rt">' + esc(pr[0]) + '</span>' + (pr.length > 1 ? '<span class="rb">, ' + esc(pr.slice(1).join(', ')) + '</span>' : '') + '</span></li>'; }).join('') + '</ul>'; };
-        return '' + '<header class="abtop"><div class="wrap"><div class="abtop-grid">' + photoFig('abphoto') + '<div class="abcap"><h1>' + esc(A.name) + '</h1><p class="abrole">' + esc(A.role) + '</p><p class="abcity">' + esc(A.aboutMeta || cityLine()) + '</p>' + dlRow() + '</div></div></div></header><div class="wrap"><section class="abs" aria-labelledby="s1"><h2 class="label tag" id="s1">' + TAG('bio') + '</h2><div><p class="statement">' + esc(A.bio[0]) + '</p><div class="prose">' + A.bio.slice(1).map(function (t) { return '<p>' + esc(t) + '</p>'; }).join('') + '</div></div></section><section class="abs" aria-labelledby="s4"><h2 class="label tag" id="s4">' + TAG('education') + '</h2><div><h3 class="sub-h">образование</h3>' + rows(A.education) + '<h3 class="sub-h">участие в воркшопах</h3>' + rows(A.workshops || A.experience) + '</div></section><section class="abs" aria-labelledby="s2"><h2 class="label tag" id="s2">' + TAG('artist statement') + '</h2><div><p class="duo">технологии <b>•</b> чувства</p><p class="statement">' + esc(A.statement[0]) + '</p><div class="prose">' + A.statement.slice(1).map(function (t) { return '<p>' + esc(t) + '</p>'; }).join('') + '</div></div></section><div class="abnext"><a class="more" style="justify-self:start" href="#/portfolio">посмотреть проекты <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a><a class="more" style="justify-self:start;margin-top:16px" href="#/exhibitions">выставки и фестивали <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></div>';
+        return '' + '<header class="abtop"><div class="wrap"><div class="abtop-grid">' + photoFig('abphoto') + '<div class="abcap"><h1>' + esc(A.name) + '</h1><p class="abrole">' + esc(A.role) + '</p><p class="abcity">' + esc(A.aboutMeta || cityLine()) + '</p>' + dlRow() + '</div></div></div></header><div class="wrap"><section class="abs" aria-labelledby="s1"><h2 class="label tag" id="s1">' + TAG('bio') + '</h2><div><p class="statement">' + esc(A.bio[0]) + '</p><div class="prose">' + A.bio.slice(1).map(function (t) { return '<p>' + esc(t) + '</p>'; }).join('') + '</div></div></section><section class="abs" aria-labelledby="s4"><h2 class="label tag" id="s4">' + TAG('education') + '</h2><div><h3 class="sub-h">образование</h3>' + rows(A.education) + '<h3 class="sub-h">участие в воркшопах</h3>' + rows(A.workshops || A.experience) + '</div></section><section class="abs" aria-labelledby="s2"><h2 class="label tag" id="s2">' + TAG('artist statement') + '</h2><div><p class="duo">технологии <b>•</b> чувства</p><p class="statement">' + esc(A.statement[0]) + '</p><div class="prose">' + A.statement.slice(1).map(function (t) { return '<p>' + esc(t) + '</p>'; }).join('') + '</div></div></section><div class="abnext"><a class="more" style="justify-self:start" href="#/portfolio">посмотреть проекты <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a><a class="more" style="justify-self:start;margin-top:16px" href="#/exhibitions">выставки • мероприятия <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></div>';
     }
 
     function mosaic(list) {
@@ -265,7 +353,7 @@
     }
     function exhibitions() {
         var all = sortedEx(); var list = all.filter(function (e) { return e.type === 'exh'; }); var fest = all.filter(function (e) { return e.type === 'fest'; });
-        return '' + '<header class="pagehead"><div class="wrap"><h1>выставки</h1></div></header><section class="pf" aria-label="Архив выставок"><div class="wrap"><h2 class="sub-h">выставки</h2><ul class="exlist">' + list.map(exRow).join('') + '</ul><h2 class="sub-h">фестивали / мероприятия</h2><ul class="exlist">' + fest.map(exRow).join('') + '</ul></div></section>';
+        return '' + '<header class="pagehead"><div class="wrap"><h1>выставки</h1></div></header><section class="pf" aria-label="Архив выставок"><div class="wrap"><h2 class="sub-h">выставки</h2><ul class="exlist">' + list.map(exRow).join('') + '</ul><h2 class="sub-h">фестивали • мероприятия</h2><ul class="exlist">' + fest.map(exRow).join('') + '</ul></div></section>';
     }
     function contactsPage() {
         return '' + '<header class="pagehead"><div class="wrap"><h1>Контакты</h1><p class="sub">Для сотрудничества, выставочных проектов и прессы — пишите.</p></div></header>' + contactsBlock(true);
@@ -353,20 +441,15 @@
             'графика отражает процесс зарождения жизни — из хаоса и случайности появляется разум, переходящий в энергию творчества'
         ],
         'aqualumina': [
-            '"Инсталляция обращается непосредственно к месту — озеру Безымянное, одному из сохранившихся естественных водоёмов Владивостока. Это реликтовое озеро с историей, уходящей на несколько тысяч лет в прошлое.',
+            'Инсталляция обращается непосредственно к месту — озеру Безымянное, одному из сохранившихся естественных водоёмов Владивостока. Это реликтовое озеро с историей, уходящей на несколько тысяч лет в прошлое.',
             'В слоях грунта под озером обнаружены морские отложения, а также раковины морских моллюсков — свидетельства того времени, когда эта территория была связана с морем. Со временем водоём отделился от морской акватории, его очертания менялись, а позже его история продолжилась уже в условиях меняющейся городской среды.',
             'Три цветка, плавающие на воде, отражают три состояния озера — его прошлое, настоящее и возможное будущее. Вода, торф, растения и всё, что происходило вокруг озера, постепенно меняют его облик. Инсталляция предлагает остановиться и посмотреть на озеро как на живое пространство, которое существует на протяжении многих лет и продолжает меняться вместе с городом.'
         ],
         'lym-open-day': [
             'в рамках Дня открытых дверей реализовано световое оформления для 3-х зон мероприятия: перформанс "Табу" с шестью световыми кольцами, "Фотозона сновидений" с роборукой для съемки видео и тремя прожекторами, и кинетичка инсталляция "Матрёшка"'
         ],
-        'sense-of-home-street': [
-            'дом – это не место, а чувства и воспоминания',
-            'чувство дома живёт внутри каждого из нас и может быть совсем не связано с конкретным местом — это чувство принятия и внутренней опоры, ощущения себя на своём месте',
-            'вязаный стрит-арт становится попыткой обрести чувство дома в городском пространстве. проект отражает хрупкость и непостоянство чувства, которое можно внезапно обрести и также легко потерять'
-        ],
-        'exit': [
-            'выход может появиться там, где вы не ожидали его увидеть'
+        'yandex-search-day': [
+            'фото и видео: inst @formate.studio'
         ]
     };
 
@@ -482,7 +565,8 @@
         var showCoverHero = !(p.blocks && p.blocks.length);
         var detailHeroMap = {
             'aqualumina': 'projects/30_aqualumina/photos/1.jpg',
-            'untitled-video': 'projects/29_untitled/photos/1.mp4'
+            'untitled-video': 'projects/29_untitled/photos/1.mp4',
+            'yandex-search-day': 'projects/25_yandex_search_day/cover.png'
         };
         var leadImg = detailHeroMap[p.id] || p.image;
         if (!leadImg && p.blocks && p.blocks.length) {
@@ -512,7 +596,7 @@
                 detail = desc + detail;
             }
         }
-        return '' + '<div class="ppage"><div class="wrap"><div class="pp-top"><a class="back" href="#/portfolio"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> все проекты</a><span class="label">' + TAG('portfolio') + '</span></div><section class="slide">' + introFigure + '<div class="slide-txt"><div class="project-copy"><div class="slide-head"><h2>' + esc(p.title) + '</h2></div><p class="slide-med">' + esc(p.year) +'<span class="slide-dot">  •  </span>' + esc(p.medium) + '</p><p class="slide-desc">' + esc(p.desc) + '</p>' + (p.concept ? '<p class="slide-con">' + esc(p.concept) + '</p>' : '') + (topLinks.length ? '<div class="mlinks" style="margin-top:14px">' + topLinks.map(function (l) { return '<a class="more" href="' + esc(l.url) + '" target="_blank" rel="noopener noreferrer">' + esc(l.label || 'behance') + ' <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>'; }).join('') + '</div>' : '') + '<div class="project-top-nav" aria-label="Навигация по проектам"><a class="project-top-link prev" href="#/portfolio/' + prev.id + '"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i><span class="label">предыдущий</span></a><a class="project-top-link next" href="#/portfolio/' + next.id + '"><span class="label">следующий</span><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></div></div></section>' + (p.video ? '<section class="msec"><h3 class="label">Видео</h3><video class="mvideo" src="' + esc(p.video) + '" controls playsinline preload="metadata"></video></section>' : '') + detail + '<div class="project-footer"><a class="more" href="#/portfolio">все проекты <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div><nav class="mnav mfoot pnav" aria-label="Другие проекты"><a href="#/portfolio/' + prev.id + '"><span class="label"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> предыдущий</span><span class="nm">' + esc(prev.title) + '</span></a><a href="#/portfolio/' + next.id + '"><span class="label">следующий <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span><span class="nm">' + esc(next.title) + '</span></a></nav></div></div>';
+        return '' + '<div class="ppage"><div class="wrap"><nav class="project-header-nav" aria-label="Навигация раздела проекта"><a class="project-header-back" href="#/portfolio"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i><span>Все проекты</span></a><span class="project-header-section">' + TAG('portfolio') + '</span></nav><section class="slide">' + introFigure + '<div class="slide-txt"><div class="project-copy"><div class="slide-head"><h2>' + esc(p.title) + '</h2></div><p class="slide-med">' + esc(p.year) +'<span class="slide-dot">  •  </span>' + esc(p.medium) + '</p><p class="slide-desc">' + esc(p.desc) + '</p>' + (p.concept ? '<p class="slide-con">' + esc(p.concept) + '</p>' : '') + (topLinks.length ? '<div class="mlinks" style="margin-top:14px">' + topLinks.map(function (l) { return '<a class="more" href="' + esc(l.url) + '" target="_blank" rel="noopener noreferrer">' + esc(l.label || 'behance') + ' <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>'; }).join('') + '</div>' : '') + '<div class="project-top-nav" aria-label="Навигация по проектам"><a class="project-top-link prev" href="#/portfolio/' + prev.id + '"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i><span class="label">предыдущий</span></a><a class="project-top-link next" href="#/portfolio/' + next.id + '"><span class="label">следующий</span><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></div></div></section>' + (p.video ? '<section class="msec"><h3 class="label">Видео</h3><video class="mvideo" src="' + esc(p.video) + '" controls playsinline preload="metadata"></video></section>' : '') + detail + '<div class="project-footer"><a class="more" href="#/portfolio">все проекты <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div><nav class="mnav mfoot pnav" aria-label="Другие проекты"><a href="#/portfolio/' + prev.id + '"><span class="label"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> предыдущий</span><span class="nm">' + esc(prev.title) + '</span></a><a href="#/portfolio/' + next.id + '"><span class="label">следующий <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span><span class="nm">' + esc(next.title) + '</span></a></nav></div></div>';
     }
     function openModal(id) {
         var i = PROJECTS.map(function (p) { return p.id; }).indexOf(id); if (i < 0) { location.hash = '#/portfolio'; return; }
@@ -603,4 +687,16 @@
         }).observe(titleEl, { childList: true });
     }
     normalizeInitialPath(); route();
+
+    function layoutProjectMedia(root) {
+        (root || document).querySelectorAll('.ppage .slide .mhero').forEach(function (hero) {
+            var image = hero.querySelector('img');
+            var video = hero.querySelector('video');
+            if (image && image.naturalWidth && image.naturalHeight) {
+                hero.style.aspectRatio = (image.naturalWidth / image.naturalHeight).toFixed(4);
+            } else if (video && video.videoWidth && video.videoHeight) {
+                hero.style.aspectRatio = (video.videoWidth / video.videoHeight).toFixed(4);
+            }
+        });
+    }
 })();

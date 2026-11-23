@@ -41,7 +41,7 @@ var A = {
     name: 'настя кедрина',
     role: 'медиахудожник с Байкала, TouchDesigner-разработчик',
     cities: ['Иркутск', 'Москва'],
-    aboutMeta: '22 года, Иркутск – Москва',
+    aboutMeta: '23 года, Иркутск – Москва',
     handle: '@NKEDRINA',
     heroImage: 'images/back-video-light.gif',
     heroImageLight: 'images/back-video-light.gif',
@@ -75,8 +75,8 @@ var A = {
         { name: 'AV-выступления', text: 'Живые выступления, где визуальный ряд и звук создаются и меняются вместе.' }
     ],
     education: [
-        { years: '2025–2027', text: 'магистратура «Технологическое искусство» (ArtTECH), НИТУ МИСИС, Москва' },
-        { years: '2021–2025', text: 'бакалавриат «Прикладная информатика в дизайне», ИГУ, Иркутск' }
+        { years: '2025–2027', text: 'магистратура «Технологическое искусство» (ArtTECH) — НИТУ МИСИС, Москва' },
+        { years: '2021–2025', text: 'бакалавриат «Прикладная информатика в дизайне» — ИГУ, Иркутск' }
     ],
     experience: [
         { years: '2026', text: 'программирование рисующего лазера — студия LYM, Москва' },
@@ -84,9 +84,9 @@ var A = {
         { years: '2026', text: 'программирование кинетической стены — студия LYM, Москва' }
     ],
     workshops: [
-        { years: '2026', text: 'программирование рисующего лазера, студия LYM, Москва' },
-        { years: '2026', text: 'программирование сценических лебедок, студия LYM, Москва' },
-        { years: '2026', text: 'программирование кинетической стены, студия LYM, Москва' }
+        { years: '2026', text: 'программирование рисующего лазера — студия LYM, Москва' },
+        { years: '2026', text: 'программирование сценических лебедок — студия LYM, Москва' },
+        { years: '2026', text: 'программирование кинетической стены — студия LYM, Москва' }
     ],
     email: 'nkedrina@list.ru',
     cv: 'data/CV.pdf',
@@ -111,7 +111,7 @@ var CATS = [
 
 var PROJECT_SECTION_ORDER = {
     install: ['consent-machine', 'oil-tonne', 'energetic-heart', 'ei-time', 'mood-mirror', 'time', 'prediction', 'baikal-install', 'kinetic-symphony', 'five-moons', 'telosophy'],
-    gen: ['untitled-video', 'sense-of-home', 'subtraction', 'voice-of-nomads', 'time-ar', 'dreams', 'living-energy'],
+    gen: ['untitled-video', 'sense-of-home', 'yandex-search-day', 'subtraction', 'voice-of-nomads', 'time-ar', 'dreams', 'living-energy'],
     light: ['aqualumina', 'lym-open-day'],
     music: ['piano-works', 'audio-reactive-graphics', 'piano-works-2'],
     photo: ['baikal-photo', 'saint-petersburg', 'dont-stop', 'path'],
@@ -176,6 +176,13 @@ var PROJECTS = [
     { id: 'sense-of-home', title: 'Чувство дома (мэппинг)', year: 2026, medium: 'цифровое производство, мэппинг-проекция, видео-арт', desc: '', concept: 'в рамках магистратуры ArtTECH МИСИС', tech: ['Видео-арт', 'Мэппинг'], exhibitions: [], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/244711203/chuvstvo-doma' }], image: 'projects/28_sense_of_home_mapping/cover.png', video: '', gallery: null, tile: [8, 6], featured: true, cat: 'gen', art: { style: 'waves', seed: 18, pal: ['#0b0c0d', '#ff5a36', '#f1efe9', '#9e4d3b'] } },
     { id: 'consent-machine', title: 'Машина согласия', year: 2026, medium: 'интерактивная инсталляция, ИИ, веб-страница', desc: '«Мозг. Искусство сознания», Галерея Краснохолмская, Москва', concept: 'проект создан в рамках магистратуры ArtTECH МИСИС, 2026', tech: ['ИИ', 'Интерактивные инсталляции'], exhibitions: ['e2'], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/247991015/mashina-soglasija' }], image: 'projects/27_consent_machine/cover.png', video: '', gallery: null, tile: [8, 6], featured: true, cat: 'install', art: { style: 'shards', seed: 66, pal: ['#101012', '#f1efe9', '#3a3a3f', '#ff5a36'] } },
     { id: 'lym-open-day', title: 'День открытых дверей студии LYM', year: 2026, medium: 'программирование светового оборудования', desc: 'Москва', concept: '', tech: ['Свет', 'Программирование'], exhibitions: ['f2'], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/250002955/den-otkrytyh-dverej-LYM' }], image: 'projects/26_lym_open_day/cover.png', video: '', gallery: null, tile: [8, 6], featured: true, cat: 'light', art: { style: 'tunnel', seed: 22, pal: ['#0a0a0b', '#ff5a36', '#f1efe9', '#3a1a12'] } },
+    { id: 'yandex-search-day', title: '«День поиска» Яндекс', year: 2026, medium: 'генеративная графика для промо-ролика', desc: 'Москва', concept: 'совместно со студией formate', tech: ['Генеративная графика', 'Промо-видео'], exhibitions: ['f4'], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/258524045/den-poiska-jandeks' }], image: 'projects/25_yandex_search_day/cover.png', video: '', gallery: null, blocks: [
+        { type: 'grid', images: ['projects/25_yandex_search_day/photos/1.1.jpg', 'projects/25_yandex_search_day/photos/1.2.jpg', 'projects/25_yandex_search_day/photos/1.3.jpg'] },
+        { type: 'video', src: 'projects/25_yandex_search_day/photos/2.mp4' },
+        { type: 'full', image: 'projects/25_yandex_search_day/photos/3.jpg' },
+        { type: 'video', src: 'projects/25_yandex_search_day/photos/4.mp4' },
+        { type: 'grid', images: ['projects/25_yandex_search_day/photos/5.1.jpg', 'projects/25_yandex_search_day/photos/5.2.jpg', 'projects/25_yandex_search_day/photos/5.3.jpg'] }
+    ], tile: [8, 6], featured: true, cat: 'gen', art: { style: 'streaks', seed: 25, pal: ['#0b0b0c', '#ff5a36', '#f1efe9', '#ffffff'] } },
     { id: 'oil-tonne', title: 'Вперёд к 14-миллиардной тонне нефти', year: 2025, medium: 'интерактивная инсталляция', desc: 'Национальный центр «Россия», Ханты-Мансийск', concept: '', tech: ['Интерактивные инсталляции'], exhibitions: ['e5'], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/248556065/vpered-k-14-milliardnoj-tonne' }], image: 'projects/24_tonnes_of_oil/cover.png', video: '', gallery: null, tile: [8, 6], featured: true, cat: 'install', art: { style: 'bars', seed: 33, pal: ['#141416', '#ff5a36', '#f1efe9', '#6b6860'] } },
     { id: 'energetic-heart', title: 'Энергетическое сердце России', year: 2025, medium: 'интерактивная инсталляция', desc: 'Национальный центр «Россия», Ханты-Мансийск', concept: '', tech: ['Интерактивные инсталляции'], exhibitions: ['e5'], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/248556199/energeticheskoe-serdce' }], image: 'projects/22_energetic_heart/cover.png', video: '', gallery: null, tile: [8, 6], featured: false, cat: 'install', art: { style: 'vortex', seed: 14, pal: ['#090b0d', '#ff5a36', '#f1efe9', '#6b6860'] } },
     { id: 'ei-time', title: 'EI-Time / Время эмоционального интеллекта', year: 2026, medium: 'интерактивный дата-арт', desc: '«Завтра и послезавтра», Галерея Краснохолмская, Москва', concept: 'работа создана в рамках магистратуры ArtTECHМИСИС', tech: ['Дата-арт', 'Интерактивные инсталляции'], exhibitions: ['e4'], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/239565871/EI-Time' }], image: 'projects/21_ei_time/cover.png', video: '', gallery: null, tile: [8, 6], featured: false, cat: 'install', art: { style: 'texture', seed: 3, pal: ['#0a0b0f', '#ff5a36', '#f1efe9', '#4d2e22'] } },
@@ -184,7 +191,7 @@ var PROJECTS = [
     { id: 'voice-of-nomads', title: 'Голос кочевников', year: 2025, medium: 'real-time графика на музыкальном фестивале с группой "Вещества"', desc: 'Иркутск – Улан-Удэ', concept: '', tech: ['AV', 'Аудиореактивная графика'], exhibitions: ['f3'], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/230634309/AV-dlja-gruppy-veschestva' }], image: 'projects/17_voice_of_nomads/cover.png', video: '', gallery: null, tile: [8, 6], featured: false, cat: 'gen', art: { style: 'streaks', seed: 88, pal: ['#0c0c0d', '#ff5a36', '#f1efe9', '#ffffff'] } },
     { id: 'living-energy', title: 'Живая энергия', year: 2025, medium: 'генеративная графика', desc: '«Энергия как предчувствие», галерея В. Бронштейна, Иркутск', concept: 'инсталляция Григория Свердлова, мэппинг выполнен совместно со Степаном Шоболовым и Алексеем Власевским', tech: ['Генеративная графика', 'Мэппинг'], exhibitions: ['e8'], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/224019843/zhivaja-energija' }], image: 'projects/13_living_energy/cover.png', video: '', gallery: null, tile: [8, 6], featured: false, cat: 'gen', art: { style: 'blobs', seed: 77, pal: ['#0c0c0d', '#ff7a3a', '#ffd9b8', '#c23a1c'] } },
     { id: 'time-ar', title: 'Время (AR)', year: 2025, medium: 'видео-арт в дополненной реальности', desc: '«Выставка №37», ЦСИ Огонь, Иркутск', concept: '', tech: ['Видео-арт', 'AR'], exhibitions: ['e7'], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/224008265/vremja-(AR)' }], image: 'projects/12_time_ar/cover.png', video: '', gallery: null, tile: [8, 6], featured: false, cat: 'gen', art: { style: 'texture', seed: 29, pal: ['#0c0c0d', '#ff5a36', '#f1efe9', '#6a4d46'] } },
-    { id: 'dreams', title: 'Мечты', year: 2024, medium: 'генеративная графика, зеркало, печать', desc: 'фестиваль «Детство», арт-пространство Сияние, Иркутск', concept: '', tech: ['Генеративная графика', 'Зеркало'], exhibitions: ['e9'], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/205797353/zerkalo-mechty' }], image: 'projects/11_dreams/cover.png', video: '', gallery: null, tile: [8, 6], featured: false, cat: 'gen', art: { style: 'vortex', seed: 41, pal: ['#0a0a0d', '#ff5a36', '#f1efe9', '#682d28'] } },
+    { id: 'dreams', title: 'Мечты', year: 2024, medium: 'генеративная графика, зеркало, печать', desc: 'фестиваль «Детство», арт-пространство Сияние, Иркутск', concept: '', tech: ['Генеративная графика', 'Зеркало'], exhibitions: ['e9'], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/205797353/zerkalo-mechty' }], image: 'projects/11_dreams/cover.png', video: '', gallery: null, tile: [8, 6], featured: false, cat: 'gen', art: { style: 'vortex', seed: 41, pal: ['#0a0b0d', '#ff5a36', '#f1efe9', '#682d28'] } },
     { id: 'kinetic-symphony', title: 'Кинетическая симфония', year: 2024, medium: 'интерактивная инсталляция с Kinect', desc: 'выставка «Шевелись!», ЦСИ Огонь, Иркутск', concept: '', tech: ['Kinect', 'Интерактивные инсталляции'], exhibitions: ['e10'], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/203096587/interaktivnaja-installjacija' }], image: 'projects/10_kinetic_symphony/cover.png', video: '', gallery: null, tile: [8, 6], featured: false, cat: 'install', art: { style: 'tunnel', seed: 99, pal: ['#0c0c0d', '#f1efe9', '#ff5a36', '#2a2a2d'] } },
     { id: 'five-moons', title: 'Пять лун', year: 2025, medium: 'интерактивная инсталляция с Kinect', desc: 'парк-отель Алтан совместно с арт-резиденцией Устье', concept: 'оформление юрты совместно со Степаном Шоболовым', tech: ['Kinect', 'Интерактивные инсталляции'], exhibitions: [], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/230634027/pjat-lun' }], image: 'projects/8_five_moons/cover.png', video: '', gallery: null, tile: [8, 6], featured: false, cat: 'install', art: { style: 'texture', seed: 73, pal: ['#0d0d0f', '#ff5a36', '#f1efe9', '#7c2a18'] } },
     { id: 'telosophy', title: 'Телософия', year: 2024, medium: 'серия перформансов с генеративной графикой', desc: 'выставка «Шевелись!», ЦСИ Огонь, Иркутск', concept: 'телесное высказывание Лизы Изидоры', tech: ['Генеративная графика', 'Перформанс'], exhibitions: ['e10'], links: [{ label: 'behance', url: 'https://www.behance.net/gallery/203120603/performansy-s-interaktivnoj-grafikoj' }], image: 'projects/9_telosophy/cover.png', video: '', gallery: null, tile: [8, 6], featured: false, cat: 'install', art: { style: 'vortex', seed: 15, pal: ['#101012', '#ff5a36', '#f1efe9', '#774431'] } },
@@ -201,19 +208,21 @@ var PROJECTS = [
 ];
 
 var EXH = [
-    { id: 'e1', type: 'exh', date: '2026-12', label: '', title: 'Ярмарка СКАН', venue: '', city: 'Красноярск', country: '', url: '', featured: true },
-    { id: 'e2', type: 'exh', date: '2026-11', label: '', title: 'Мозг. Искусство сознания', venue: 'Галерея Краснохолмская', city: 'Москва', country: '', url: '', featured: true },
-    { id: 'e3', type: 'exh', date: '2026-10', label: '', title: 'Волшебная гора', venue: 'KABINET', city: 'Самара', country: '', url: '', featured: false },
-    { id: 'e4', type: 'exh', date: '2026-09', label: '', title: 'Завтра и послезавтра', venue: 'Галерея Краснохолмская', city: 'Москва', country: '', url: '', featured: false },
+    { id: 'e11', type: 'exh', date: '2026-12', label: '', title: '«От буквы к цифре. Книга художника»', venue: 'Галерея Краснохолмская', city: 'Москва', country: '', url: '', featured: false },
+    { id: 'e1', type: 'exh', date: '2026-11', label: '', title: 'ярмарка СКАН', venue: '', city: 'Красноярск', country: '', url: '', featured: true },
+    { id: 'f4', type: 'fest', date: '2026-11', label: '', title: '«День поиска» Яндекс', venue: '', city: 'Москва', country: '', url: '', featured: true },
+    { id: 'f2', type: 'fest', date: '2026-10', label: '', title: 'День открытых дверей студии LYM', venue: 'Студия LYM', city: 'Москва', country: '', url: '', featured: true },
+    { id: 'e2', type: 'exh', date: '2026-10', label: '', title: '«Мозг. Искусство сознания»', venue: 'Галерея Краснохолмская', city: 'Москва', country: '', url: '', featured: false },
+    { id: 'e12', type: 'exh', date: '2026-09', label: '', title: '«Волшебная гора»', venue: 'KABINET', city: 'Самара', country: '', url: '', featured: false },
+    { id: 'e4', type: 'exh', date: '2026-08', label: '', title: '«Завтра и послезавтра»', venue: 'Галерея Краснохолмская', city: 'Москва', country: '', url: '', featured: false },
     { id: 'e5', type: 'exh', date: '2025-12', label: '', title: 'Национальный центр «Россия»', venue: '', city: 'Ханты-Мансийск', country: '', url: '', featured: true },
-    { id: 'e6', type: 'exh', date: '2025-11', label: '', title: 'Цифровые чувства. Мультисенсорный поворот', venue: 'Галерея Краснохолмская', city: 'Москва', country: '', url: '', featured: true },
-    { id: 'e7', type: 'exh', date: '2025-10', label: '', title: 'Выставка №37', venue: 'ЦСИ Огонь', city: 'Иркутск', country: '', url: '', featured: false },
-    { id: 'e8', type: 'exh', date: '2025-09', label: '', title: 'Энергия как предчувствие', venue: 'Галерея Виктора Бронштейна', city: 'Иркутск', country: '', url: '', featured: false },
-    { id: 'e9', type: 'exh', date: '2024-12', label: '', title: 'Детство', venue: 'Арт-пространство Сияние', city: 'Иркутск', country: '', url: '', featured: false },
-    { id: 'e10', type: 'exh', date: '2024-11', label: '', title: 'Шевелись!', venue: 'ЦСИ Огонь', city: 'Иркутск', country: '', url: '', featured: true },
-    { id: 'f1', type: 'fest', date: '2026-12', label: '', title: 'Открывая Безымянное', venue: 'Озеро Безымянное', city: 'Владивосток', country: '', url: '', featured: false },
-    { id: 'f2', type: 'fest', date: '2026-11', label: '', title: 'День открытых дверей студии LYM', venue: 'Студия LYM', city: 'Москва', country: '', url: '', featured: false },
-    { id: 'f3', type: 'fest', date: '2025-12', label: '', title: 'Голос кочевников', venue: 'Село Ацагат', city: 'Бурятия', country: '', url: '', featured: false }
+    { id: 'e6', type: 'exh', date: '2025-11', label: '', title: '«Цифровые чувства. Мультисенсорный поворот»', venue: 'Галерея Краснохолмская', city: 'Москва', country: '', url: '', featured: true },
+    { id: 'e7', type: 'exh', date: '2025-10', label: '', title: '«Выставка No37»', venue: 'ЦСИ Огонь', city: 'Иркутск', country: '', url: '', featured: false },
+    { id: 'e8', type: 'exh', date: '2025-09', label: '', title: '«Энергия как предчувствие»', venue: 'галерея Виктора Бронштейна', city: 'Иркутск', country: '', url: '', featured: false },
+    { id: 'e9', type: 'exh', date: '2024-12', label: '', title: '«Детство»', venue: 'арт-пространство Сияние', city: 'Иркутск', country: '', url: '', featured: false },
+    { id: 'e10', type: 'exh', date: '2024-11', label: '', title: '«Шевелись!»', venue: 'ЦСИ Огонь', city: 'Иркутск', country: '', url: '', featured: false },
+    { id: 'f1', type: 'fest', date: '2026-12', label: '', title: '«Открывая Безымянное»', venue: 'озеро Безымянное', city: 'Владивосток', country: '', url: '', featured: false },
+    { id: 'f3', type: 'fest', date: '2025-12', label: '', title: '«Голос Кочевников»', venue: 'село Ацагат', city: 'Бурятия', country: '', url: '', featured: false }
 ];
 
 A = window.normalizeAssetUrls(A);
