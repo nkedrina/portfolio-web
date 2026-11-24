@@ -1,4 +1,4 @@
-var VERCEL_BLOB_BASE = 'https://lnhqdym4r8iqqhi1.public.blob.vercel-storage.com/';
+var VERCEL_BLOB_BASE = '';
 
 window.VERCEL_BLOB_BASE = VERCEL_BLOB_BASE;
 
@@ -8,13 +8,8 @@ window.toAssetUrl = function (src) {
 
     var value = src.replace(/\\/g, '/');
     if (/^(?:[a-z]+:)?\/\//i.test(value) || /^data:/i.test(value)) return value;
-    if (value.indexOf(VERCEL_BLOB_BASE.replace(/\/+$/, '')) === 0) return value;
 
-    var normalized = value.replace(/^\/+/, '');
-    var isMediaAsset = /\.(?:png|jpe?g|gif|webp|avif|svg|ico|mp4|webm|mov)(?:\?.*)?$/i.test(normalized) || /^(?:images|projects)\//i.test(normalized);
-    if (!isMediaAsset) return value;
-
-    return VERCEL_BLOB_BASE.replace(/\/+$/, '') + '/' + normalized;
+    return value.replace(/^\/+/, '');
 };
 
 window.normalizeAssetUrls = function (value) {
@@ -89,8 +84,8 @@ var A = {
         { years: '2026', text: 'программирование кинетической стены — студия LYM, Москва' }
     ],
     email: 'nkedrina@list.ru',
-    cv: 'data/CV.pdf',
-    portfolioPdf: 'data/portfolio-nkedrina.pdf',
+    cv: 'data/pdf/CV.pdf',
+    portfolioPdf: 'data/pdf/portfolio-nkedrina.pdf',
     socials: [
         { label: 'instagram*', url: 'https://instagram.com/nkedrina' },
         { label: 'behance', url: 'https://www.behance.net/nkedrina' }
@@ -140,7 +135,6 @@ var PROJECTS = [
         { type: 'full', image: 'projects/30_aqualumina/photos/1.jpg' },
         { type: 'grid', images: ['projects/30_aqualumina/photos/2.1.jpg', 'projects/30_aqualumina/photos/2.2.jpg'] },
         { type: 'full', image: 'projects/30_aqualumina/photos/3.png' },
-        { type: 'full', image: 'projects/30_aqualumina/photos/4.png' },
         { type: 'grid', images: ['projects/30_aqualumina/photos/5.1.jpg', 'projects/30_aqualumina/photos/5.2.jpg'] },
         { type: 'grid', images: ['projects/30_aqualumina/photos/6.1.jpg', 'projects/30_aqualumina/photos/6.2.jpg'] },
         { type: 'video', src: 'projects/30_aqualumina/photos/7.mp4' },

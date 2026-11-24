@@ -21,14 +21,13 @@
 - Файл: `data.js:5-18`.
 - Назначение: преобразовать строковый путь медиа или оставить внешние/специальные URL без изменений.
 - Вход: `src` — произвольное значение или строка.
-- Результат: исходное значение или URL Vercel Blob/исходный строковый путь.
+- Результат: исходное значение или локальный относительный путь.
 - Логика:
   - возвращает `null`, пустое значение или нестроку без изменения;
   - приводит обратные слеши к `/`;
   - не меняет абсолютные HTTP(S), протокол-относительные URL и `data:` URL;
-  - не меняет уже нормализованный Blob URL;
-  - для путей с медиарасширениями либо для путей `images/` и `projects/` добавляет базовый Blob-префикс.
-- Зависимости: `VERCEL_BLOB_BASE` и `window.VERCEL_BLOB_BASE`.
+  - удаляет начальные слеши у локальных путей `images/` и `projects/`.
+- Зависимости: нет внешнего хранилища.
 - Где используется:
   - через `normalizeAssetUrls()` при загрузке `data.js`;
   - косвенно через `window.normalizeAssetUrls(A/CATS/PROJECTS/EXH)`;
@@ -433,7 +432,7 @@
 ### `artImg(art,w,h,v,alt)`
 
 - Файл: `render.js:158-159`.
-- Назначение: создать лениво загружаемый Canvas-placeholder.
+- Назначение: создать лениво загружаемую Canvas-placeholder.
 - Вход: параметры арт-системы, размеры, вариант, alt-текст.
 - Результат: `<img data-art="...">` с записью параметров в словарь `reg`.
 - Зависимости: `reg/rid`, `esc()` и последующий `loadImg()`/`hydrate()`.
@@ -703,40 +702,26 @@
 
 ### `setHero()`
 
-- Файл: `render.js:618`.
-- Назначение: установить hero-фон в зависимости от темы.
-- Вход: нет параметров; читает `data-theme` и `A.heroImageLight/Dark/Hero`.
-- Результат: CSS custom property `--hero` на `#hero` после setTimeout.
-- Логика: для light выбирает `A.heroImageLight || A.heroImage || default-light`; для dark — `A.heroImageDark || A.heroImage || default-dark`; затем пропускает через `toBlobAssetUrl()`.
-- Зависимости: `A`, `#hero`, `toBlobAssetUrl()`, таймер `setTimeout`.
-- Где вызывается: `render()` при главной и `toggleTheme()` при смене темы на главной.
-- Риск изменений: асинхронная установка через таймер может примениться после смены страницы и найти уже новый/другой hero. Hero всегда проверяет DOM-элемент в момент таймаута.
+- Файл: `render.js:611`.
+- Назначение: установить локальный hero-фон в зависимости от темы.
+- Логика: для light выбирает `A.heroImageLight || A.heroImage || images/back-video-light.gif`; для dark — `A.heroImageDark || A.heroImage || images/back-video-dark.gif`; затем нормализует путь через `toLocalAssetUrl()`.
+- Зависимости: `A`, `#hero`, `toLocalAssetUrl()`, таймер `setTimeout`.
 
-### `toBlobAssetUrl(src)`
+### `toLocalAssetUrl(src)`
 
-- Файл: `render.js:20-26`.
-- Назначение: локальный преобразователь медиа для runtime override hero/portrait.
+- Файл: `render.js:18-21`.
+- Назначение: нормализовать локальный медиа-путь для runtime override hero/portrait.
 - Вход: строковый src.
-- Результат: absolute Blob URL для локального/относительного media, внешний URL без изменений.
-- Логика: аналогична `data.js.toAssetUrl`, но проверяет абсолютный URL и добавляет `BLOB_BASE` для относительных путей.
-- Зависимости: `BLOB_BASE`.
+- Результат: локальный относительный путь или внешний URL без изменений.
+- Логика: заменяет обратные слеши и удаляет начальные слеши.
 - Использование: `applyRuntimeAssetOverrides()`, `setHero()`.
-- Повторяющаяся логика: по назначению дублирует часть `data.js.toAssetUrl()`; обе реализации отдельно проверяют внешние URL и Blob-base.
-- Риск изменений: изменить только одну функцию нельзя считать полной заменой общего asset resolver из `data.js`.
 
-### `applyRuntimeAssetOverrides()`
+### `applyRuntimeAssetOverrides()```
 
 - Файл: `render.js:28-49`.
-- Назначение: принудительно обновить CSS фоновые изображения после theme switch/рендера.
-- Вход: нет параметров; читает `A.photo`, theme-specific fields и `data-theme`.
-- Результат:
-  - создает или обновляет `<style id="blob-runtime-asset-fix">`;
-  - переопределяет `.about .fig::before`, `.abtop .abphoto::before`, `.abtop .fig::before`, `.hero`;
-  - для `#hero` дополнительно устанавливает style property `--hero`.
-- Логика: выбирает portrait/hero под theme и пропускает через `toBlobAssetUrl()`.
-- Зависимости: `A`, `toBlobAssetUrl()`, DOM, `data-theme`, `style.css` selectors.
-- Вызывается: из `render()` всегда и из `toggleTheme()` на apply-фазе.
-- Риск изменений: runtime `<style>` может переопределять последующие CSS-правила из-за `!important`. Это один из наиболее важных risks при изменении стилей портретов/hero.
+- Назначение: принудительно обновить локальные CSS-фоны после theme switch/рендера.
+- Результат: создает или обновляет `<style id="local-runtime-asset-fix">`, переопределяет портреты и hero для светлой и тёмной темы.
+- Логика: выбирает локальные portrait/hero-пути под theme и пропускает через `toLocalAssetUrl()`.
 
 ## 10. События и обработчики
 

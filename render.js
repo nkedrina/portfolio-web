@@ -15,32 +15,30 @@
     var TAG = window.PORTFOLIO_UTILS.TAG;
     var RM = window.PORTFOLIO_UTILS.RM;
     var pfCat = 'all';
-    var BLOB_BASE = (window.VERCEL_BLOB_BASE || 'https://lnhqdym4r8iqqhi1.public.blob.vercel-storage.com/').replace(/\/+$/, '');
 
-    function toBlobAssetUrl(src) {
+    function toLocalAssetUrl(src) {
         if (!src || typeof src !== 'string') return src;
-        var value = src.replace(/\\/g, '/');
-        if (/^(?:[a-z]+:)?\/\//i.test(value) || /^data:/i.test(value)) return value;
-        if (value.indexOf(BLOB_BASE) === 0) return value;
-        return BLOB_BASE + '/' + value.replace(/^\/+/, '');
+        return src.replace(/\\/g, '/').replace(/^\/+/, '');
     }
 
     function applyRuntimeAssetOverrides() {
         var theme = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-        var aboutBg = toBlobAssetUrl(theme === 'light' ? (A.photoLight || A.photo || 'images/me_2.jpg') : (A.photo || 'images/me_1.jpg'));
-        var aboutTopBg = toBlobAssetUrl(theme === 'light' ? ('images/me_4.jpg') : ('images/me_3.jpg'));
-        var heroBg = toBlobAssetUrl(theme === 'light' ? (A.heroImageLight || A.heroImage || 'images/back-video-light.gif') : (A.heroImageDark || A.heroImage || 'images/back-video-dark.gif'));
+        var aboutBg = toLocalAssetUrl(theme === 'light' ? (A.photoLight || A.photo || 'images/me_2.jpg') : (A.photo || 'images/me_1.jpg'));
+        var aboutTopBg = toLocalAssetUrl(theme === 'light' ? ('images/me_4.jpg') : ('images/me_3.jpg'));
+        var heroBg = toLocalAssetUrl(theme === 'light' ? (A.heroImageLight || A.heroImage || 'images/back-video-light.gif') : (A.heroImageDark || A.heroImage || 'images/back-video-dark.gif'));
 
-        var existing = document.getElementById('blob-runtime-asset-fix');
+        var existing = document.getElementById('local-runtime-asset-fix');
         if (!existing) {
             existing = document.createElement('style');
-            existing.id = 'blob-runtime-asset-fix';
+            existing.id = 'local-runtime-asset-fix';
             document.head.appendChild(existing);
         }
         existing.textContent = [
             '.about .fig::before { background-image: url("' + aboutBg + '") !important; }',
             '.abtop .abphoto::before, .abtop .fig::before { background-image: url("' + aboutTopBg + '") !important; }',
-            '.hero { background-image: url("' + heroBg + '") !important; }'
+            theme === 'light'
+                ? 'html[data-theme="light"] body.home .hero { background-image: none !important; background-color: var(--bg) !important; }'
+                : '.hero { background-image: url("' + heroBg + '") !important; }'
         ].join(' ');
 
         if (document.getElementById('hero')) {
@@ -174,11 +172,8 @@
             im.onerror = function () {
                 if (im.dataset.fallbackApplied) return;
                 im.dataset.fallbackApplied = '1';
-                var blobPrefix = BLOB_BASE + '/';
-                if (im.src.indexOf(blobPrefix) === 0) {
-                    im.src = im.src.slice(blobPrefix.length);
-                } else if (!/^(?:[a-z]+:)?\/\//i.test(im.dataset.src)) {
-                    im.src = im.dataset.src;
+                if (!/^(?:[a-z]+:)?\/\//i.test(im.dataset.src)) {
+                    im.src = toLocalAssetUrl(im.dataset.src);
                 }
             };
             im.src = im.dataset.src;
@@ -276,7 +271,7 @@
         return '<p class="soft about-copy" aria-label="Описание обо мне">' + esc(light ? (A.practiceLight || A.practice) : A.practice) + '</p>';
     }
     function dlRow() {
-        return '<div class="dl"><a class="btn pri" href="data/CV.pdf" target="_blank" rel="noopener noreferrer" data-file="cv"><i class="fa-solid fa-download" aria-hidden="true"></i> скачать CV</a><a class="btn" href="data/portfolio-nkedrina.pdf" target="_blank" rel="noopener noreferrer" data-file="portfolioPdf"><i class="fa-solid fa-download" aria-hidden="true"></i> скачать портфолио</a></div>';
+        return '<div class="dl"><a class="btn pri" href="data/pdf/CV.pdf" target="_blank" rel="noopener noreferrer" data-file="cv"><i class="fa-solid fa-download" aria-hidden="true"></i> скачать CV</a><a class="btn" href="data/pdf/portfolio-nkedrina.pdf" target="_blank" rel="noopener noreferrer" data-file="portfolioPdf"><i class="fa-solid fa-download" aria-hidden="true"></i> скачать портфолио</a></div>';
     }
     function socialLink(s) {
         var isinstagram = /instagram/i.test(s.label) || /instagram/i.test(s.url);
@@ -298,8 +293,8 @@
         var feat = PROJECTS.filter(function (p) { return p.featured; }).slice(0, 6);
         var ex = sortedEx().filter(function (e) { return e.featured === true; }).slice(0, 5);
         var shortBio = A.shortBio ? '<p class="lead2">' + esc(A.shortBio) + '</p>' : '';
-        var homeCv = '<div class="dl"><a class="btn pri" href="data/CV.pdf" target="_blank" rel="noopener noreferrer" data-file="cv"><i class="fa-solid fa-download" aria-hidden="true"></i> скачать CV</a></div>';
-        var homePortfolioLink = '<div class="dl"><a class="btn" href="data/portfolio-nkedrina.pdf" target="_blank" rel="noopener noreferrer" data-file="portfolioPdf"><i class="fa-solid fa-download" aria-hidden="true"></i> скачать портфолио</a></div>';
+        var homeCv = '<div class="dl"><a class="btn pri" href="data/pdf/CV.pdf" target="_blank" rel="noopener noreferrer" data-file="cv"><i class="fa-solid fa-download" aria-hidden="true"></i> скачать CV</a></div>';
+        var homePortfolioLink = '<div class="dl"><a class="btn" href="data/pdf/portfolio-nkedrina.pdf" target="_blank" rel="noopener noreferrer" data-file="portfolioPdf"><i class="fa-solid fa-download" aria-hidden="true"></i> скачать портфолио</a></div>';
         return '' +
             '<section class="hero" id="hero" aria-label="Главный экран"><div class="hero-in"><div class="hero-txt"><p class="hero-handle">' + esc(A.handle) + '</p><h1 class="home-hero-name">' + esc(A.name) + '</h1><p class="hero-role">' + esc(A.role) + '<br>' + cityLine() + '</p></div></div><div class="hero-bot"><button class="hero-tgl home-hero-toggle" type="button" data-theme-toggle aria-label="Сменить тему"><span class="sw" aria-hidden="true"><span class="kb"><i class="fa-solid fa-moon m"></i><i class="fa-solid fa-sun s"></i></span></span><span>сменить тему</span></button><button class="hint" type="button" data-scroll="#about" aria-label="Прокрутить вниз"><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></button></div></section>' +
             '<section class="sec" id="about" aria-labelledby="h-about"><div class="wrap"><div class="about">' + photoFigTheme('') + '<div class="about-txt rv"><h2 class="title" id="h-about">обо мне</h2>' + homeCv + shortBio + practiceText() + '<a class="more" href="#/about">подробнее <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></div></div></section>' +
@@ -615,7 +610,7 @@
     function closeQuick() { if (quickEl.hidden) return; quickEl.hidden = true; quickEl.innerHTML = ''; document.body.classList.remove('lock'); if (quickFocus && document.contains(quickFocus)) quickFocus.focus({ preventScroll: true }); quickFocus = null; }
 
     var main = $('#main'), hdr = $('#hdr'), current = null;
-    function setHero() { var hero = $('#hero'); if (!hero) return; setTimeout(function () { var theme = document.documentElement.getAttribute('data-theme'); var src = theme === 'light' ? (A.heroImageLight || A.heroImage || 'images/back-video-light.gif') : (A.heroImageDark || A.heroImage || 'images/back-video-dark.gif'); hero.style.setProperty('--hero', 'url("' + toBlobAssetUrl(src) + '")'); }, 0); }
+    function setHero() { var hero = $('#hero'); if (!hero) return; setTimeout(function () { var theme = document.documentElement.getAttribute('data-theme'); var src = theme === 'light' ? (A.heroImageLight || A.heroImage || 'images/back-video-light.gif') : (A.heroImageDark || A.heroImage || 'images/back-video-dark.gif'); hero.style.setProperty('--hero', 'url("' + toLocalAssetUrl(src) + '")'); }, 0); }
     function render(page, pid) {
         if (page === '/portfolio') pfCat = 'all';
         main.innerHTML = page === '/project' ? projectHTML(PROJECTS.map(function (p) { return p.id; }).indexOf(pid)) : routes[page]();
@@ -644,6 +639,7 @@
         var y = Math.max(0, window.pageYOffset || 0); hdr.classList.toggle('top', y < 24); if (!document.body.classList.contains('lock')) { var d = y - lastY; if (y < 24) hdr.classList.remove('hide'); else if (d > 6 && y > 120) hdr.classList.add('hide'); else if (d < -6) hdr.classList.remove('hide'); if (Math.abs(d) > 6) lastY = y; } document.body.classList.toggle('hh', hdr.classList.contains('hide'));
     }
     window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(function () { onScroll(); ticking = false; }); } }, { passive: true }); hdr.addEventListener('focusin', function () { hdr.classList.remove('hide'); });
+   
     function toggleTheme() { var root = document.documentElement; var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light'; var apply = function () { root.setAttribute('data-theme', next); if (document.body.classList.contains('home')) setHero(); applyRuntimeAssetOverrides(); }; try { localStorage.setItem('theme', next); } catch (e) {} if (document.startViewTransition && !RM) { document.startViewTransition(apply); } else { root.classList.add('tchg'); apply(); setTimeout(function () { root.classList.remove('tchg'); }, 700); } }
     var tt;
     function toast(m) { var t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(function () { t.classList.remove('show'); }, 3600); }

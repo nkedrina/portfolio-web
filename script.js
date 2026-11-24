@@ -57,8 +57,8 @@
                 { years: '2026', text: 'программирование кинетической стены, студия LYM, Москва' }
             ],
             email: 'nkedrina@list.ru',
-            cv: 'data/CV.pdf',
-            portfolioPdf: 'data/portfolio-nkedrina.pdf',
+            cv: 'data/pdf/CV.pdf',
+            portfolioPdf: 'data/pdf/portfolio-nkedrina.pdf',
             socials: [
                 { label: 'instagram', url: 'https://instagram.com/nkedrina' },
                 { label: 'behance', url: 'https://www.behance.net/nkedrina' }

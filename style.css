@@ -584,7 +584,7 @@
         .hero-role .dot { background: currentColor; }
         .hero-bot { position: absolute; left: 50%; bottom: clamp(14px, 3vh, 28px); transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 6px; z-index: 1; }
         .hint { position: static; transform: none; padding: 8px 14px; font-size: 1.1rem; }
-        .hero-tgl { display: inline-flex; align-items: center; gap: 10px; padding: 8px 18px; border: 1px solid rgba(31, 124, 238, .55); border-radius: 999px; background: transparent; color: #1F7CEE; font-family: var(--sans); font-style: italic; font-size: .84rem; cursor: pointer; transition: background .25s, color .25s; }
+        .hero-tgl { display: inline-flex; align-items: center; gap: 10px; padding: 8px 18px; border: 0; border-radius: 999px; background: transparent; color: #1F7CEE; font-family: var(--sans); font-style: italic; font-size: .84rem; cursor: pointer; transition: background .25s, color .25s; }
         .hero-tgl i { color: inherit; }
         .hero-tgl:hover { background: rgba(31, 124, 238, .2); color: #B1CCFF; }
 
@@ -615,7 +615,7 @@
         .is-home .pcap { padding-top: 10px; }
         .is-home .pcap .pct { font-size: 1rem; }
         .is-home .pcap .pcm { font-size: .84rem; }
-        @media (min-width: 901px) { .hgrid { grid-template-columns: repeat(3, 1fr); } }
+        @media (min-width: 901px) { .hgrid, .sgrid { grid-template-columns: repeat(3, 1fr); } }
 
         /* Portfolio: hover overlay + uneven mosaic */
         .pcard.is-arch .pov { display: flex !important; }
@@ -758,7 +758,7 @@
         .ft-top { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); padding-bottom: clamp(40px, 6vw, 72px); }
         .ft-name { font-family: var(--hf); font-style: normal; font-weight: 700; font-size: clamp(1.6rem, 3vw, 2.4rem); letter-spacing: -.03em; line-height: 1.1; color: var(--head); text-transform: none; }
         .ft-role { margin-top: 10px; color: var(--fg); opacity: .75; font-size: 1rem; max-width: 26em; }
-        .ft-mail { display: inline-block; margin-top:  20px; color: var(--blue); font-size: 1.05rem; transition: color .4s var(--ease); }
+        .ft-mail { display: inline-block; margin-top:         20px; color: var(--blue); font-size: 1.05rem; transition: color .4s var(--ease); }
         .ft-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         .ft-col { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
         .ft-h { font-size: .86rem; color: var(--fg); opacity: .6; margin-bottom: 4px; }
@@ -838,7 +838,7 @@
 
         /* Hero theme button with animated switch */
         .hero-tgl { gap: 12px; padding: 8px 20px 8px 8px; }
-        .hero-tgl .sw { position: relative; flex: none; width: 44px; height: 24px; border-radius: 999px; border: 1px solid rgba(31, 124, 238, .7); }
+        .hero-tgl .sw { position: relative; flex: none; width: 44px; height: 24px; border: 0; border-radius: 999px; }
         .hero-tgl .kb { position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: #1F7CEE; display: grid; place-items: center; transition: transform .6s var(--ease), background .4s var(--ease); }
         .hero-tgl .kb i { position: absolute; font-size: .62rem; color: #000016; transition: opacity .4s var(--ease), transform .6s var(--ease); }
         [data-theme="dark"] .hero-tgl .kb .s { opacity: 0; transform: rotate(-90deg) scale(.4); }
@@ -1175,11 +1175,84 @@
         background: transparent;
         overflow: hidden;
     }
-    .ppage .slide .mhero video {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        max-height: none;
-        object-fit: contain;
+    .abtop {
+            padding: calc(var(--hh) + clamp(32px, 5vw, 72px)) 0 clamp(48px, 7vw, 96px);
+        }
+        .abtop-grid {
+            display: grid;
+            grid-template-columns: minmax(280px, 380px) minmax(0, 1fr);
+            gap: clamp(32px, 7vw, 96px);
+            align-items: center;
+        }
+        .abtop .abphoto {
+            width: 100%;
+            max-width: 380px;
+            margin: 0;
+        }
+        .abcap {
+            min-width: 0;
+            max-width: 680px;
+        }
+        .abcap h1 {
+            font-size: clamp(2.2rem, 4.5vw, 4rem);
+            line-height: .95;
+            letter-spacing: -.04em;
+            margin-bottom: clamp(20px, 3vw, 32px);
+        }
+        .abrole,
+        .abcity {
+            color: var(--muted);
+        }
+        .abrole {
+            font-size: clamp(1.05rem, 2vw, 1.35rem);
+            line-height: 1.45;
+            max-width: 34em;
+        }
+        .abcity {
+            margin-top: 10px;
+            font-size: .95rem;
+        }
+        .abcap .dl {
+            margin-top: clamp(24px, 4vw, 40px);
+        }
+        @media (max-width: 700px) {
+            .abtop {
+                padding-top: calc(var(--hh) + 24px);
+                padding-bottom: 48px;
+            }
+            .abtop-grid {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+            .abtop .abphoto {
+                max-width: 100%;
+            }
+            .abcap h1 {
+                font-size: clamp(1.9rem, 9vw, 3rem);
+            }
+        }
+        .abs .sub-h { color: var(--head); }
+        .abs[aria-labelledby="s4"] .rows { gap: 12px; }
+        @media (min-width: 701px) {
+            .abs[aria-labelledby="s4"] .rows li {
+                display: grid;
+                grid-template-columns: max-content minmax(0, 1fr);
+                gap: 0 16px;
+                align-items: baseline;
+                padding: 0;
+                border: 0;
+            }
+            .abs[aria-labelledby="s4"] .rows .y { white-space: nowrap; }
+        }
+        @media (max-width: 700px) {
+            .abs[aria-labelledby="s4"] .rows li {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 2px;
+            }
+        }
+        html[data-theme="light"] body.home {
+        background-color: var(--bg);
+    }
+    html[data-theme="light"] body.home .hero {
+        background-color: var(--bg);
     }
