@@ -1135,3 +1135,51 @@
         .project-header-back { gap: 8px; font-size: .82rem; }
         .project-header-section { font-size: .72rem; }
     }
+
+    /* Uniform vertical rhythm for project text and media blocks */
+    .ppage .wrap > .project-gallery,
+    .ppage .wrap > .project-media--full,
+    .ppage .wrap > .project-description-full,
+    .ppage .wrap > .msec {
+        margin-block: clamp(32px, 5vw, 56px);
+    }
+    .ppage .wrap > .project-gallery {
+        padding-block: 0;
+    }
+    .ppage .wrap > .project-media--full {
+        padding-block: 0;
+    }
+    .ppage .wrap > .msec {
+        padding-block: 0;
+    }
+    .ppage .project-description-full .dbody + .dbody {
+        margin-top: 1.2em;
+    }
+
+    /* Project video: responsive, proportional, and without extra frames */
+    .ppage .project-video-player,
+    .ppage .mvideo {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        max-height: none;
+        object-fit: contain;
+        background: transparent;
+    }
+    .ppage .project-media--full.project-video {
+        width: 100%;
+        height: auto;
+        margin: 0;
+        padding: 0;
+        background: transparent;
+        overflow: hidden;
+    }
+    .ppage .slide .mhero video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        max-height: none;
+        object-fit: contain;
+    }
