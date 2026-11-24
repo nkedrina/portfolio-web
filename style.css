@@ -900,9 +900,16 @@
         .hdr .nav a[aria-current="page"] { transform: none; }
 
         html[data-theme="light"] body:not(.home) .hdr .nav,
-        html[data-theme="light"] body.home .hdr:not(.top) .nav { background: color-mix(in srgb, var(--bg) 72%, transparent); }
-        html[data-theme="light"] body.home .hdr.top .nav { background: rgba(0, 0, 10, .32); }
-
+        html[data-theme="light"] body.home .hdr.top .nav,
+        html[data-theme="light"] body.home .hdr:not(.top) .nav {
+            background: color-mix(in srgb, var(--bg) 72%, transparent);
+        }
+        html[data-theme="light"] body.home .hdr.top .brand,
+        html[data-theme="light"] body.home .hdr.top .nav a,
+        html[data-theme="light"] body.home .hdr.top .nav a:hover,
+        html[data-theme="light"] body.home .hdr.top .nav a[aria-current="page"] {
+            color: #000016;
+        }
         @media (max-width: 700px) {
             .hdr .nav { gap: 0; padding: 4px; }
             .hdr .nav a { padding: 7px 9px; font-size: .72rem; }
@@ -1255,4 +1262,20 @@
     }
     html[data-theme="light"] body.home .hero {
         background-color: var(--bg);
+        background-image: url("images/back-video-light.gif");
     }
+    html[data-theme="light"] .tgl {
+            color: #000016;
+            background: rgba(220, 232, 255, .72);
+        }
+        html[data-theme="light"] .tgl:hover {
+            background: rgba(220, 232, 255, .92);
+        }
+        html[data-theme="light"] .tgl i {
+            color: #000016;
+        }
+        .pf .sub-h,
+        .pf + .wrap .sub-h,
+        .pagehead h1 {
+            color: var(--head);
+        }

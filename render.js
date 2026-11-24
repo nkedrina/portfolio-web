@@ -37,7 +37,7 @@
             '.about .fig::before { background-image: url("' + aboutBg + '") !important; }',
             '.abtop .abphoto::before, .abtop .fig::before { background-image: url("' + aboutTopBg + '") !important; }',
             theme === 'light'
-                ? 'html[data-theme="light"] body.home .hero { background-image: none !important; background-color: var(--bg) !important; }'
+                ? 'html[data-theme="light"] body.home .hero { background-image: url("' + heroBg + '") !important; background-color: var(--bg) !important; }'
                 : '.hero { background-image: url("' + heroBg + '") !important; }'
         ].join(' ');
 
@@ -638,6 +638,7 @@
     function onScroll() {
         var y = Math.max(0, window.pageYOffset || 0); hdr.classList.toggle('top', y < 24); if (!document.body.classList.contains('lock')) { var d = y - lastY; if (y < 24) hdr.classList.remove('hide'); else if (d > 6 && y > 120) hdr.classList.add('hide'); else if (d < -6) hdr.classList.remove('hide'); if (Math.abs(d) > 6) lastY = y; } document.body.classList.toggle('hh', hdr.classList.contains('hide'));
     }
+
     window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(function () { onScroll(); ticking = false; }); } }, { passive: true }); hdr.addEventListener('focusin', function () { hdr.classList.remove('hide'); });
    
     function toggleTheme() { var root = document.documentElement; var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light'; var apply = function () { root.setAttribute('data-theme', next); if (document.body.classList.contains('home')) setHero(); applyRuntimeAssetOverrides(); }; try { localStorage.setItem('theme', next); } catch (e) {} if (document.startViewTransition && !RM) { document.startViewTransition(apply); } else { root.classList.add('tchg'); apply(); setTimeout(function () { root.classList.remove('tchg'); }, 700); } }
