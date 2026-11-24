@@ -22,3 +22,36 @@
   - `ai-context/CHANGELOG_AI.md`.
 - Суть: добавлены обязательный контекст перед задачами, поиск существующей реализации, ограничения на архитектуру и минимальные изменения, алгоритм проверки и обновления документации.
 - Проверка: документы созданы только в запрошенных местах; исходный код сайта не изменялся.
+
+## 2026-11-24
+
+### Добавлены шаблоны TXT-содержимого и правила медиа-папок
+
+- Задача: задокументировать ручные структуры содержимого страниц и проверить существующие TXT-файлы с реальными данными сайта.
+- Изменённые файлы:
+  - `ai-context/PROJECT_MAP.md`;
+  - `ai-context/CONSTANTS.md`;
+  - `ai-context/CHANGELOG_AI.md`;
+  - `data/main_page_template.txt`;
+  - `data/about_page_template.txt`;
+  - `data/portfolio_page_template.txt`;
+  - `data/exhibitions_page_template.txt`;
+  - `data/contacts_page_template.txt`;
+  - `data/project_page_template.txt`.
+- Суть: зафиксированы назначения папок `projects/`, `images/` и `data/`, правила обложек и нумерации `photos/`, а также созданы шаблоны ручного заполнения для основных и проектных страниц.
+- Сохранены без изменений: исходный код, изображения, видео, PDF, существующие TXT-файлы и `data/projects.txt`.
+
+## 2026-11-24
+
+### Актуализация документации светлой и тёмной тем
+
+- Задача: провести полный аудит theme-switching и привести документацию и TXT-шаблоны к тематической структуре.
+- Изученные файлы:
+  - все файлы `ai-context/`;
+  - все HTML-файлы;
+  - `data.js`, `utils.js`, `render.js`, `script.js`, `style.css`;
+  - все существующие TXT-файлы в `data/` и старые описания в `data/prev txt/`.
+- Актуализированные документы: `ai-context/PROJECT_MAP.md`, `ai-context/FUNCTIONS.md`, `ai-context/CONSTANTS.md`, `AGENTS.md`, `ai-context/CHANGELOG_AI.md`.
+- Актуализированные TXT-шаблоны: все файлы `*_template.txt` в `data/`.
+- Суть: зафиксированы `localStorage.theme`, `data-theme`, светлые/тёмные hero и портреты, общий и theme-dependent контент, а также то, что медиа проектных страниц темой не меняются.
+- Сохранено без изменений: исходный код, старые TXT-описания в `data/prev txt/`, `data/projects.txt`, изображения, GIF, видео и PDF.
