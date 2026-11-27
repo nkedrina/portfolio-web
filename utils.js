@@ -8,7 +8,7 @@
     var pad2 = function (n) { return n < 10 ? '0' + n : '' + n; };
     var place = function (e) { return [e.city, e.country].filter(Boolean).join(', '); };
     var cityLine = function () { return window.PORTFOLIO_DATA.A.cities.map(esc).join(' — '); };
-    var TAG = function (t) { return esc(t) + ' <i class="dot" aria-hidden="true"></i> @nkedrina'; };
+    var TAG = function (t) { return esc(t) + ' <i class="dot" aria-hidden="true"></i> nkedrina'; };
 
     window.PORTFOLIO_UTILS = {
         $: $, RM: RM, esc: esc, sortedEx: sortedEx, pad2: pad2, place: place, cityLine: cityLine, TAG: TAG

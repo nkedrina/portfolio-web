@@ -14,7 +14,7 @@
             role: 'медиахудожник с Байкала, TouchDesigner-разработчик',
             cities: ['Иркутск', 'Москва'],
             aboutMeta: '23 года, Иркутск – Москва',
-            handle: '@NKEDRINA',
+            handle: 'nkedrina',
             heroImage: 'images/back-video-light.gif',   // URL фонового изображения Hero (пусто — генеративная текстура)
             photo: 'images/me_1.jpg',       // URL фотографии художника (пусто — заглушка)
             shortBio: '',

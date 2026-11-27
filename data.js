@@ -37,7 +37,7 @@ var A = {
     role: 'медиахудожник с Байкала, TouchDesigner-разработчик',
     cities: ['Иркутск', 'Москва'],
     aboutMeta: '23 года, Иркутск – Москва',
-    handle: '@NKEDRINA',
+    handle: 'nkedrina',
     heroImage: 'images/back-video-light.gif',
     heroImageLight: 'images/back-video-light.gif',
     heroImageDark: 'images/back-video-dark.gif',
